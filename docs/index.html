@@ -5,13 +5,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | Lagless_Ad-Virtua</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <!-- ✅ デフォルトのスタイルシートを読み込みます -->
     <link rel="stylesheet" href="TemplateData/style.css">
 
-    <!-- ✅ モバイル用ビューポートを明示的に追加 -->
+    <!-- ✅ モバイル用ビューポート -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <style>
-      /* ✅ スマホ・PC共通でcanvasを画面いっぱいに */
+      /* ✅ 画面全体を黒背景にし、マージンを削除 */
       html, body {
         margin: 0;
         padding: 0;
@@ -19,6 +20,8 @@
         overflow: hidden;
         background: black;
       }
+
+      /* ✅ コンテナを画面全体に広げ、flexboxで中身を中央揃えに */
       #unity-container {
         width: 100%;
         height: 100%;
@@ -28,13 +31,21 @@
         align-items: center;
         justify-content: center;
       }
+
+      /* ✅ 修正点: 
+         アスペクト比を維持するため、width/height: 100% を削除。
+         代わりに max-width/max-height を使用し、コンテナ（flexbox）が
+         中央揃えとスケーリングを処理するようにします。
+      */
       #unity-canvas {
-        width: 100%;
-        height: 100%;
+        /* 削除: width: 100%; */
+        /* 削除: height: 100%; */
+        max-width: 100%;
+        max-height: 100%;
         background: black;
       }
 
-      /* ✅ ローディングバーなどの調整 */
+      /* ✅ ローディングバーの位置を調整 (既存のまま) */
       #unity-loading-bar {
         position: absolute;
         bottom: 10%;
@@ -45,6 +56,7 @@
   </head>
 
   <body>
+    <!-- ✅ 既存のHTML構造 (変更なし) -->
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width="960" height="540" tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -101,14 +113,15 @@
       };
 
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // ✅ モバイル設定: 常に画面全体にフィット
         container.className = "unity-mobile";
         canvas.className = "unity-mobile";
-        config.devicePixelRatio = 1; // 高解像度端末でズレを抑制
+        // ✅ モバイルでの高解像度端末のズレ抑制 (既存のまま)
+        config.devicePixelRatio = 1; 
       } else {
-        // ✅ デスクトップ: サイズを可変に
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
+        // ✅ 修正点: デスクトップでスタイルを強制上書きしていた部分を削除
+        // 削除: canvas.style.width = "100%";
+        // 削除: canvas.style.height = "100%";
+        // (CSS側で max-width/max-height が適用されるようにします)
       }
 
       loadingBar.style.display = "block";
@@ -124,7 +137,9 @@
             unityInstance.SetFullscreen(1);
           };
         }).catch((message) => {
-          alert(message);
+          // ✅ alert() はiPadでデバッグしにくいため、console.error に変更を推奨
+          console.error(message);
+          unityShowBanner(message, 'error'); // バナーにも表示
         });
       };
       document.body.appendChild(script);
