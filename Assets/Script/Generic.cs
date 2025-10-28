@@ -217,4 +217,15 @@ public static class Generic
             yield return null;
         }
     }
+
+    public static IEnumerator BlackOut(SpriteRenderer obj, float speed)
+    {
+        float blackOutColor = 1;
+        while (obj.color.b > 0)
+        {
+            obj.color = new Color(blackOutColor, blackOutColor, blackOutColor, 1);
+            blackOutColor -= speed;
+            yield return null;
+        }
+    }
 }

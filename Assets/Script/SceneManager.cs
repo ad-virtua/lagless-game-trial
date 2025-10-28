@@ -12,7 +12,8 @@ public class SceneManager : MonoBehaviour
         Tutorial,
         Stage1,
         Stage2,
-        Stage3
+        Stage3,
+        NULL
     }
 
     [HideInInspector]

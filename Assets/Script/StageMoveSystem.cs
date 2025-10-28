@@ -5,7 +5,8 @@ public class StageMoveSystem : MonoBehaviour
 {
     public static StageMoveSystem instance;
 
-    [SerializeField] private GameObject player, eye;
+    [SerializeField] private GameObject player, mouth, inMouth;
+    [SerializeField] private GameObject tutorialLatter;
     [SerializeField] private GameObject clearUI;
     [SerializeField] private float directionSpeed;
 
@@ -46,15 +47,15 @@ public class StageMoveSystem : MonoBehaviour
 
                 if (SceneManager.instance.sceneType == SceneManager.SceneType.Tutorial)
                 {
-                    if (StageManager.instance.SceneEndAreaChecker(SceneManager.SceneType.Tutorial))
+                    if (StageManager.instance.stageAreaCount == 4 && !tutorialLatter.activeSelf)
                     {
                         StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
-                        StartCoroutine(Generic.BigupObj(eye, 3f, 2.5f));
+                        StartCoroutine(StageChangeBigupBlackout(mouth, inMouth));
                     }
-                    else
+                    else if (StageManager.instance.stageAreaCount < 4)
                     {
                         StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
-                        StartCoroutine(Generic.BigupObj(eye, 0.2f, 2.5f));
+                        StartCoroutine(Generic.BigupObj(mouth, 0.2f, 2.5f));
                     }
                 }
             }
@@ -64,8 +65,15 @@ public class StageMoveSystem : MonoBehaviour
                 stagePosCount.x += 18f;
                 StageManager.instance.stageAreaCount--;
                 StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
-                StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
-                StartCoroutine(Generic.SmallupObj(eye, 0.2f, 2.5f));
+
+                if (SceneManager.instance.sceneType == SceneManager.SceneType.Tutorial)
+                {
+                    if (StageManager.instance.stageAreaCount < 4)
+                    {
+                        StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
+                        StartCoroutine(Generic.SmallupObj(mouth, 0.2f, 2.5f));
+                    }
+                }
             }
         }
 
@@ -86,6 +94,11 @@ public class StageMoveSystem : MonoBehaviour
             yield return null; // 次のフレームまで待つ
         }
 
+        if (StageManager.instance.stageAreaCount == 4 && !tutorialLatter.activeSelf)
+        {
+            tutorialLatter.SetActive(true);
+        }
+
         if (StageManager.instance.SceneEndAreaChecker(SceneManager.instance.sceneType))
         {
             clearUI.SetActive(true);
@@ -94,5 +107,13 @@ public class StageMoveSystem : MonoBehaviour
 
         isScreenMove = false;
         marginDistance = new Vector2(player.transform.position.x, player.transform.position.z);
+    }
+
+    IEnumerator StageChangeBigupBlackout(GameObject beforeObj, GameObject afterObj)
+    {
+        yield return StartCoroutine(Generic.BigupObj(beforeObj, 3.0f, 1.75f));
+        yield return StartCoroutine(Generic.BlackOut(beforeObj.GetComponent<SpriteRenderer>(), 0.02f));
+        beforeObj.SetActive(false);
+        afterObj.SetActive(true);
     }
 }

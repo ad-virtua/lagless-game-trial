@@ -173,6 +173,11 @@ public class Player : MonoBehaviour
             StartCoroutine(StealthTime(1f));
             StartCoroutine(Generic.DamageFlash(GetComponent<SpriteRenderer>(), 0.05f, 20));
         }
+
+        if (collision.gameObject.CompareTag("Water"))
+        {
+            transform.position = collision.transform.GetChild(0).position;
+        }
     }
 
     IEnumerator StealthTime(float interval)

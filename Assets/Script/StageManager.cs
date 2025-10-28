@@ -16,8 +16,13 @@ public class StageManager : MonoBehaviour
         instance = this;
     }
 
-    public bool SceneEndAreaChecker(SceneManager.SceneType targetScene)
+    public bool SceneEndAreaChecker(SceneManager.SceneType targetScene = SceneManager.SceneType.NULL)
     {
+        if (targetScene == SceneManager.SceneType.NULL)
+        {
+            targetScene = SceneManager.instance.sceneType;
+        }
+
         switch (targetScene)
         {
             case SceneManager.SceneType.Tutorial:
