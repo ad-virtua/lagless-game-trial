@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.AudioSettings;
 
 public class Player : MonoBehaviour
 {
@@ -293,6 +292,16 @@ public class Player : MonoBehaviour
         if (shotIntervalCount >= shotInterval)
         {
             shotIntervalCount = 0;
+        }
+    }
+
+    public void DamageHP(int damage)
+    {
+        hp -= damage;
+        if (hp < 0)
+        {
+            hp = 0;
+            Destroy(gameObject);
         }
     }
 }

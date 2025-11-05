@@ -6,8 +6,7 @@ public class StageMoveSystem : MonoBehaviour
     public static StageMoveSystem instance;
 
     [SerializeField] private GameObject player, mouth, inMouth;
-    [SerializeField] private GameObject tutorialLatter;
-    [SerializeField] private GameObject clearUI;
+    [SerializeField] private GameObject tutorialStarted, tutorialLatter;
     [SerializeField] private float directionSpeed;
 
     private ScreenRangeChecker playerScreenRangeChecker;
@@ -96,12 +95,13 @@ public class StageMoveSystem : MonoBehaviour
 
         if (StageManager.instance.stageAreaCount == 4 && !tutorialLatter.activeSelf)
         {
+            tutorialStarted.SetActive(false);
             tutorialLatter.SetActive(true);
         }
 
         if (StageManager.instance.SceneEndAreaChecker(SceneManager.instance.sceneType))
         {
-            clearUI.SetActive(true);
+            GameSystemOwner.isClear = true;
             yield break;
         }
 

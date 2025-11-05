@@ -7,7 +7,8 @@ public class EnemyManager : MonoBehaviour
 
     public enum EnemyType
     {
-        MoveLoop
+        MoveLoop,
+        Idle
     }
 
     private void Awake()
@@ -21,6 +22,9 @@ public class EnemyManager : MonoBehaviour
         {
             case EnemyType.MoveLoop:
                 enemy.AddComponent<EnemyMoveLoop>();
+                break;
+            case EnemyType.Idle:
+                enemy.AddComponent<EnemyIdle>();
                 break;
         }
     }
