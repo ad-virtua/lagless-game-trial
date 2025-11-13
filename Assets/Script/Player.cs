@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (StageMoveSystem.instance.isScreenMove)
+        if (StageMoveSystem.instance.isScreenMove || StageMoveSystem.instance.isStageMove)
         {
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -176,6 +176,11 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Water"))
         {
             transform.position = collision.transform.GetChild(0).position;
+        }
+
+        if (collision.gameObject.CompareTag("Clear"))
+        {
+            GameSystemOwner.isClear = true;
         }
     }
 

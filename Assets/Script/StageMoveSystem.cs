@@ -16,6 +16,8 @@ public class StageMoveSystem : MonoBehaviour
     private float margin = 1f;
     private Vector2 marginDistance;
 
+    public bool isStageMove;
+
     private void Awake()
     {
         instance = this;
@@ -42,7 +44,16 @@ public class StageMoveSystem : MonoBehaviour
                 isScreenMove = playerScreenRangeChecker.isStop = true;
                 stagePosCount.x += -18f;
                 StageManager.instance.stageAreaCount++;
-                StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
+               
+                if (StageManager.instance.stageAreaCount == 8)
+                {
+                    StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y + 3f, transform.position.z)));
+                }
+                else if (StageManager.instance.stageAreaCount == 9)
+                {
+                    StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + 7f, transform.position.y + 9f, transform.position.z)));
+                }
+                else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
 
                 if (SceneManager.instance.sceneType == SceneManager.SceneType.Tutorial)
                 {
@@ -87,11 +98,13 @@ public class StageMoveSystem : MonoBehaviour
 
     IEnumerator ScreenMove(Vector3 targetPos)
     {
+        isStageMove = true;
         while (Vector3.Distance(transform.position, targetPos) > 0.01f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, directionSpeed * Time.deltaTime);
             yield return null; // 次のフレームまで待つ
         }
+        isStageMove = false;
 
         if (StageManager.instance.stageAreaCount == 4 && !tutorialLatter.activeSelf)
         {
