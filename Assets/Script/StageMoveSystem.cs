@@ -10,13 +10,13 @@ public class StageMoveSystem : MonoBehaviour
     [SerializeField] private float directionSpeed;
 
     private ScreenRangeChecker playerScreenRangeChecker;
-    [HideInInspector] public bool isScreenMove;
+    [HideInInspector] public bool isPlayerScreenMove;
 
     private Vector3 stagePosCount;
     private float margin = 1f;
     private Vector2 marginDistance;
 
-    public bool isStageMove;
+    public bool isScreenMove;
 
     private void Awake()
     {
@@ -34,14 +34,14 @@ public class StageMoveSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerScreenRangeChecker && !isScreenMove && marginDistance == Vector2.zero)
+        if (playerScreenRangeChecker && !isPlayerScreenMove && marginDistance == Vector2.zero)
         {
             // ここで取得と同時にリセット
             var cameraWasDirection = playerScreenRangeChecker.GetCameraWasDirection();
 
             if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Right)
             {
-                isScreenMove = playerScreenRangeChecker.isStop = true;
+                isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 stagePosCount.x += -18f;
                 StageManager.instance.stageAreaCount++;
                
@@ -71,10 +71,19 @@ public class StageMoveSystem : MonoBehaviour
             }
             else if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Left)
             {
-                isScreenMove = playerScreenRangeChecker.isStop = true;
+                isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 stagePosCount.x += 18f;
                 StageManager.instance.stageAreaCount--;
-                StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
+
+                if (StageManager.instance.stageAreaCount == 7)
+                {
+                    StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y - 3f, transform.position.z)));
+                }
+                else if (StageManager.instance.stageAreaCount == 8)
+                {
+                    StartCoroutine(ScreenMove(new Vector3(stagePosCount.x - 7f, transform.position.y - 9f, transform.position.z)));
+                }
+                else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
 
                 if (SceneManager.instance.sceneType == SceneManager.SceneType.Tutorial)
                 {
@@ -98,13 +107,13 @@ public class StageMoveSystem : MonoBehaviour
 
     IEnumerator ScreenMove(Vector3 targetPos)
     {
-        isStageMove = true;
+        isScreenMove = true;
         while (Vector3.Distance(transform.position, targetPos) > 0.01f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, directionSpeed * Time.deltaTime);
             yield return null; // 次のフレームまで待つ
         }
-        isStageMove = false;
+        isScreenMove = false;
 
         if (StageManager.instance.stageAreaCount == 4 && !tutorialLatter.activeSelf)
         {
@@ -118,7 +127,7 @@ public class StageMoveSystem : MonoBehaviour
             yield break;
         }
 
-        isScreenMove = false;
+        isPlayerScreenMove = false;
         marginDistance = new Vector2(player.transform.position.x, player.transform.position.z);
     }
 

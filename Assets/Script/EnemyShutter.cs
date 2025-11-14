@@ -25,6 +25,8 @@ public class EnemyShutter : MonoBehaviour
 
     private void Update()
     {
+        if (StageMoveSystem.instance.isScreenMove) return;
+
         if (transform.position.y > startPos.y)
         {
             transform.Translate(0f, -0.01f, 0f);

@@ -57,7 +57,7 @@ public class Core : MonoBehaviour
     {
         // 初期位置からの範囲内でランダムな目標座標を設定
         float randomX = (startPosition.x + transform.root.position.x) + Random.Range(-maxDistanceX, maxDistanceX);
-        float randomY = startPosition.y + transform.root.position.y + Random.Range(-maxDistanceY, maxDistanceY);
+        float randomY = (startPosition.y + transform.root.position.y) + Random.Range(-maxDistanceY, maxDistanceY);
         targetPosition = new Vector3(randomX, randomY, transform.position.z) - transform.root.position;
     }
 }

@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (StageMoveSystem.instance.isScreenMove || StageMoveSystem.instance.isStageMove)
+        if (StageMoveSystem.instance.isPlayerScreenMove || StageMoveSystem.instance.isScreenMove)
         {
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -262,7 +262,7 @@ public class Player : MonoBehaviour
                 yield return new WaitForSeconds(targetSpeed);
             }
 
-            yield return new WaitWhile(() => StageMoveSystem.instance.isScreenMove);
+            yield return new WaitWhile(() => StageMoveSystem.instance.isPlayerScreenMove);
 
             if (isNotLoop) yield break;
         }

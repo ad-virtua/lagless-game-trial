@@ -176419,8 +176419,8 @@ MonoBehaviour:
   tutorialStarted: {fileID: 1117191833}
   tutorialLatter: {fileID: 120915750}
   directionSpeed: 7
+  isPlayerScreenMove: 0
   isScreenMove: 0
-  isStageMove: 0
 --- !u!1 &2099387235
 GameObject:
   m_ObjectHideFlags: 0
