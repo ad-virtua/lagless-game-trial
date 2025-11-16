@@ -44,7 +44,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (StageMoveSystem.instance.isPlayerScreenMove || StageMoveSystem.instance.isScreenMove)
+        if (StageMoveSystem.instance &&
+            (StageMoveSystem.instance.isPlayerScreenMove ||
+             StageMoveSystem.instance.isScreenMove))
         {
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;

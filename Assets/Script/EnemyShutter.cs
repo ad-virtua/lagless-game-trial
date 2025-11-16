@@ -25,11 +25,26 @@ public class EnemyShutter : MonoBehaviour
 
     private void Update()
     {
-        if (StageMoveSystem.instance.isScreenMove) return;
+        if (StageMoveSystem.instance.isScreenMove)
+        {
+            ResetPos();
+            return;
+        }
 
         if (transform.position.y > startPos.y)
         {
-            transform.Translate(0f, -0.01f, 0f);
+            transform.Translate(0f, -0.6f * Time.deltaTime, 0f);
+            ResetPos();
+        }
+    }
+
+    private void ResetPos()
+    {
+        if (transform.position.y < startPos.y)
+        {
+            Vector3 pos = transform.position;
+            pos.y = startPos.y;
+            transform.position = pos;
         }
     }
 

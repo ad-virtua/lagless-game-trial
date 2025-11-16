@@ -65,11 +65,11 @@ public class StageMoveSystem : MonoBehaviour
                     else if (StageManager.instance.stageAreaCount < 4)
                     {
                         StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
-                        StartCoroutine(Generic.BigupObj(mouth, 0.2f, 2.5f));
+                        StartCoroutine(Generic.BigupObj(mouth, 0.2f, 1.5f));
                     }
                 }
             }
-            else if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Left)
+            else if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Left || cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Up)
             {
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 stagePosCount.x += 18f;
@@ -81,7 +81,7 @@ public class StageMoveSystem : MonoBehaviour
                 }
                 else if (StageManager.instance.stageAreaCount == 8)
                 {
-                    StartCoroutine(ScreenMove(new Vector3(stagePosCount.x - 7f, transform.position.y - 9f, transform.position.z)));
+                    StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y - 9f, transform.position.z)));
                 }
                 else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
 
@@ -90,7 +90,7 @@ public class StageMoveSystem : MonoBehaviour
                     if (StageManager.instance.stageAreaCount < 4)
                     {
                         StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
-                        StartCoroutine(Generic.SmallupObj(mouth, 0.2f, 2.5f));
+                        StartCoroutine(Generic.SmallupObj(mouth, 0.2f, 1.5f));
                     }
                 }
             }
@@ -133,7 +133,7 @@ public class StageMoveSystem : MonoBehaviour
 
     IEnumerator StageChangeBigupBlackout(GameObject beforeObj, GameObject afterObj)
     {
-        yield return StartCoroutine(Generic.BigupObj(beforeObj, 3.0f, 1.75f));
+        yield return StartCoroutine(Generic.BigupObj(beforeObj, 3.0f, 1f));
         yield return StartCoroutine(Generic.BlackOut(beforeObj.GetComponent<SpriteRenderer>(), 0.02f));
         beforeObj.SetActive(false);
         afterObj.SetActive(true);

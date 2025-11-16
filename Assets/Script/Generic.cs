@@ -192,9 +192,9 @@ public static class Generic
         while (bigObj.transform.localScale.x < bigScale.x)
         {
             bigObj.transform.localScale +=
-                new Vector3(addScale / (time * 60.0f),
-                            addScale / (time * 60.0f),
-                            addScale / (time * 60.0f));
+                new Vector3(addScale / (time * Time.deltaTime * 6000f),
+                            addScale / (time * Time.deltaTime * 6000f),
+                            addScale / (time * Time.deltaTime * 6000f));
 
             yield return null;
         }
@@ -210,9 +210,9 @@ public static class Generic
         while (smallObj.transform.localScale.x > smallScale.x)
         {
             smallObj.transform.localScale -=
-                new Vector3(minusScale / (time * 60.0f),
-                            minusScale / (time * 60.0f),
-                            minusScale / (time * 60.0f));
+                new Vector3(minusScale / (time * Time.deltaTime * 6000f),
+                            minusScale / (time * Time.deltaTime * 6000f),
+                            minusScale / (time * Time.deltaTime * 6000f));
 
             yield return null;
         }
