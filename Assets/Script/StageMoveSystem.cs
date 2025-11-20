@@ -112,6 +112,7 @@ public class StageMoveSystem : MonoBehaviour
             tutorialLatter.SetActive(false);
             transform.position = Vector3.zero;
             stagePosCount = new Vector3(0, 0, 0);
+            marginDistance = Vector2.zero;
         }
     }
 
