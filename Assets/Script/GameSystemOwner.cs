@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameSystemOwner : MonoBehaviour
 {
     [SerializeField]
     private GameObject gameOverUI, clearUI;
+    [SerializeField]
+    private GameObject[] movieScenes;
 
     public static bool isClear, isGameOver;
 
@@ -28,7 +31,17 @@ public class GameSystemOwner : MonoBehaviour
     {
         if (isClear)
         {
-            if (!clearUI.activeSelf) clearUI.SetActive(true);
+            if (!movieScenes[(int)SceneManager.SceneType.Stage1 - 1].activeSelf)
+            {
+                movieScenes[(int)SceneManager.SceneType.Stage1 - 1].SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (var movieScene in movieScenes)
+            {
+                movieScene.SetActive(false);
+            }
         }
     }
 }

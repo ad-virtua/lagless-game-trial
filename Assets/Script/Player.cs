@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance;
+
     [SerializeField] private Sprite[] idel, run, jump, shot, runShot;
     [SerializeField] private float moveSpeed, jumpForce, idelAnimSpeed, runAnimSpeed, jumpAnimSpeed, shotAnimSpeed, runShotAnimSpeed;
     [SerializeField] private GameObject shotPoint;
@@ -21,6 +23,8 @@ public class Player : MonoBehaviour
 
     private bool isShotMobile;
     private float shotMobileInterval;
+    private Vector3 startPosition;
+    private Quaternion startRot;
 
     enum AnimType
     {
@@ -33,12 +37,19 @@ public class Player : MonoBehaviour
     }
     AnimType animType;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerScale = transform.localScale;
         rb = GetComponent<Rigidbody2D>();
+        startPosition = transform.position;
+        startRot = transform.rotation;
     }
 
     // Update is called once per frame
@@ -80,7 +91,7 @@ public class Player : MonoBehaviour
         // Aキーを押している間
         if (Input.GetKey(KeyCode.A))
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift)) RunShotAnim();
+            if (Input.GetKeyDown(KeyCode.I)) RunShotAnim();
             if (!isShotMobile) RunAnim();
             transform.localScale = new Vector3(-playerScale.x, playerScale.y, playerScale.z);
             transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
@@ -88,21 +99,21 @@ public class Player : MonoBehaviour
         // Dキーを押している間
         else if (Input.GetKey(KeyCode.D))
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift)) RunShotAnim();
+            if (Input.GetKeyDown(KeyCode.I)) RunShotAnim();
             if (!isShotMobile) RunAnim();
             transform.localScale = playerScale;
             transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift)) ShotAnim();
+            if (Input.GetKeyDown(KeyCode.I)) ShotAnim();
             if (!isShotMobile) IdelAnim();
         }
 
         // ジャンプ（スペースキー）
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            if (!Input.GetKeyDown(KeyCode.LeftShift)) JumpAnim();
+            if (!Input.GetKeyDown(KeyCode.I)) JumpAnim();
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
         }
@@ -310,5 +321,11 @@ public class Player : MonoBehaviour
             hp = 0;
             Destroy(gameObject);
         }
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = startPosition;
+        transform.rotation = startRot;
     }
 }

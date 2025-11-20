@@ -8,12 +8,11 @@ public class SceneManager : MonoBehaviour
 
     public enum SceneType
     {
-        Title,
-        Tutorial,
-        Stage1,
-        Stage2,
-        Stage3,
-        NULL
+        Title = 0,
+        Stage1 = 1,
+        Stage2 = 2,
+        Stage3 = 3,
+        NULL = -1
     }
 
     [HideInInspector]
@@ -27,6 +26,7 @@ public class SceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sceneType = SceneType.Tutorial;
+        sceneType = SceneType.Stage1;
+        StageManager.instance.ChangeStage((int)sceneType);
     }
 }

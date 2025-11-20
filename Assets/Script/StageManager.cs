@@ -6,7 +6,11 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager instance;
 
-    public int tutorialEndAreaCount, stage1EndAreaCount, stage2EndAreaCount, stage3EndAreaCount;
+    public int stage1EndAreaCount, stage2EndAreaCount, stage3EndAreaCount;
+
+    public GameObject map;
+
+    public GameObject[] stage1Parts, stage2Parts, stage3Parts;
 
     [HideInInspector]
     public int stageAreaCount;
@@ -14,6 +18,25 @@ public class StageManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Update()
+    {
+        if (GameSystemOwner.isClear)
+        {
+            switch (SceneManager.instance.sceneType)
+            {
+                case SceneManager.SceneType.Stage1:
+                    if (stageAreaCount != stage1EndAreaCount) stageAreaCount = stage1EndAreaCount;
+                    break;
+                case SceneManager.SceneType.Stage2:
+                    if (stageAreaCount != stage2EndAreaCount) stageAreaCount = stage1EndAreaCount;
+                    break;
+                case SceneManager.SceneType.Stage3:
+                    if (stageAreaCount != stage3EndAreaCount) stageAreaCount = stage1EndAreaCount;
+                    break;
+            }
+        }
     }
 
     public bool SceneEndAreaChecker(SceneManager.SceneType targetScene = SceneManager.SceneType.NULL)
@@ -25,9 +48,6 @@ public class StageManager : MonoBehaviour
 
         switch (targetScene)
         {
-            case SceneManager.SceneType.Tutorial:
-                if (stageAreaCount == tutorialEndAreaCount) return true;
-                break;
             case SceneManager.SceneType.Stage1:
                 if (stageAreaCount == stage1EndAreaCount) return true;
                 break;
@@ -39,5 +59,45 @@ public class StageManager : MonoBehaviour
                 break;
         }
         return false;
+    }
+
+    public void ChangeStage(int nextStage)
+    {
+        map.SetActive(false);
+        Player.instance.ResetPosition();
+        GameSystemOwner.isClear = GameSystemOwner.isGameOver = false;
+
+        switch ((SceneManager.SceneType)nextStage)
+        {
+            case SceneManager.SceneType.Stage1:
+                foreach (var item in stage1Parts)
+                {
+                    item.SetActive(true);
+                }
+                foreach (var item in stage2Parts)
+                {
+                    item.SetActive(false);
+                }
+                stageAreaCount = 0;
+                break;
+            case SceneManager.SceneType.Stage2:
+                foreach (var item in stage1Parts)
+                {
+                    item.SetActive(false);
+                }
+                foreach (var item in stage2Parts)
+                {
+                    item.SetActive(true);
+                }
+                stageAreaCount = 0;
+                break;
+            case SceneManager.SceneType.Stage3:
+                break;
+        }
+    }
+
+    public void ActiveMap()
+    {
+        map.SetActive(true);
     }
 }

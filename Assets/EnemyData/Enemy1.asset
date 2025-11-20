@@ -26,5 +26,6 @@ MonoBehaviour:
   jumpAnimSpeed: 0
   moveLoopDistance: 0.6
   moveToLeftFirst: 1
+  idelMotion: 0
   isSpriteLeft: 0
   hp: 3

@@ -16,7 +16,7 @@ public class StageMoveSystem : MonoBehaviour
     private float margin = 1f;
     private Vector2 marginDistance;
 
-    public bool isScreenMove;
+    [HideInInspector] public bool isScreenMove;
 
     private void Awake()
     {
@@ -45,17 +45,8 @@ public class StageMoveSystem : MonoBehaviour
                 stagePosCount.x += -18f;
                 StageManager.instance.stageAreaCount++;
                
-                if (StageManager.instance.stageAreaCount == 8)
-                {
-                    StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y + 3f, transform.position.z)));
-                }
-                else if (StageManager.instance.stageAreaCount == 9)
-                {
-                    StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + 7f, transform.position.y + 9f, transform.position.z)));
-                }
-                else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
 
-                if (SceneManager.instance.sceneType == SceneManager.SceneType.Tutorial)
+                if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage1)
                 {
                     if (StageManager.instance.stageAreaCount == 4 && !tutorialLatter.activeSelf)
                     {
@@ -67,7 +58,17 @@ public class StageMoveSystem : MonoBehaviour
                         StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
                         StartCoroutine(Generic.BigupObj(mouth, 0.2f, 1.5f));
                     }
+                    if (StageManager.instance.stageAreaCount == 8)
+                    {
+                        StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y + 3f, transform.position.z)));
+                    }
+                    else if (StageManager.instance.stageAreaCount == 9)
+                    {
+                        StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + 7f, transform.position.y + 9f, transform.position.z)));
+                    }
+                    else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
                 }
+                else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
             }
             else if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Left || cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Up)
             {
@@ -75,24 +76,24 @@ public class StageMoveSystem : MonoBehaviour
                 stagePosCount.x += 18f;
                 StageManager.instance.stageAreaCount--;
 
-                if (StageManager.instance.stageAreaCount == 7)
-                {
-                    StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y - 3f, transform.position.z)));
-                }
-                else if (StageManager.instance.stageAreaCount == 8)
-                {
-                    StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y - 9f, transform.position.z)));
-                }
-                else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
-
-                if (SceneManager.instance.sceneType == SceneManager.SceneType.Tutorial)
+                if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage1)
                 {
                     if (StageManager.instance.stageAreaCount < 4)
                     {
                         StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
                         StartCoroutine(Generic.SmallupObj(mouth, 0.2f, 1.5f));
                     }
+                    if (StageManager.instance.stageAreaCount == 7)
+                    {
+                        StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y - 3f, transform.position.z)));
+                    }
+                    else if (StageManager.instance.stageAreaCount == 8)
+                    {
+                        StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y - 9f, transform.position.z)));
+                    }
+                    else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
                 }
+                else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
             }
         }
 
@@ -104,6 +105,15 @@ public class StageMoveSystem : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        if (GameSystemOwner.isClear)
+        {
+            tutorialLatter.SetActive(false);
+            transform.position = Vector3.zero;
+            stagePosCount = new Vector3(0, 0, 0);
+        }
+    }
 
     IEnumerator ScreenMove(Vector3 targetPos)
     {

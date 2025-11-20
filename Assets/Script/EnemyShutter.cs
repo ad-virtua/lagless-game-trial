@@ -59,6 +59,9 @@ public class EnemyShutter : MonoBehaviour
             transform.position = pos;
             Destroy(collision.transform.gameObject);
 
+            if (hp == 9999) return;
+            hp--;
+            if (hp == 0) Destroy(gameObject);
         }
     }
 }

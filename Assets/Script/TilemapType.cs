@@ -6,6 +6,7 @@ public class TilemapType : MonoBehaviour
 {
     public Tilemap tilemap; // Inspectorで割り当て
     public GameObject core;
+    public float startX = 54.0f;
 
     void Start()
     {
@@ -32,7 +33,7 @@ public class TilemapType : MonoBehaviour
                     Vector3 worldPos = tilemap.CellToWorld(cellPosition);
 
                     Debug.Log($"タイル座標: {cellPosition}, ワールド座標: {worldPos}");
-                    GameObject obj = Instantiate(core, worldPos + new Vector3(54.5f, 0.5f, 0), Quaternion.identity);
+                    GameObject obj = Instantiate(core, worldPos + new Vector3(startX + 0.5f, 0.5f, 0), Quaternion.identity);
                     obj.transform.parent = tilemap.transform;
                 }
             }
