@@ -107,6 +107,11 @@ public class StageMoveSystem : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(SceneManager.instance.sceneType != SceneManager.SceneType.Stage1)
+        {
+            inMouth.SetActive(false);
+        }
+
         if (GameSystemOwner.isClear)
         {
             inMouth.SetActive(false);
