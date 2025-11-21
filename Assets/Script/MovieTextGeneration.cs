@@ -99,6 +99,8 @@ public class MovieTextGeneration : MonoBehaviour
     {
         if (textComponent == null) return;
         if (_typingCoroutine != null) StopCoroutine(_typingCoroutine);
+
+        _fullText = _fullText.Replace("(改行)", "\n");
         textComponent.text = _fullText;
         _typingCoroutine = null;
         IsPlaying = false;
