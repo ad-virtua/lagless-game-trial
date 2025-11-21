@@ -55,6 +55,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameSystemOwner.isClear) return;
+
         if (StageMoveSystem.instance &&
             (StageMoveSystem.instance.isPlayerScreenMove ||
              StageMoveSystem.instance.isScreenMove))
