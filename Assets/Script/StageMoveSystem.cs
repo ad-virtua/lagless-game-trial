@@ -113,6 +113,7 @@ public class StageMoveSystem : MonoBehaviour
             transform.position = Vector3.zero;
             stagePosCount = new Vector3(0, 0, 0);
             marginDistance = Vector2.zero;
+            Player.instance.ResetPosition();
         }
     }
 
