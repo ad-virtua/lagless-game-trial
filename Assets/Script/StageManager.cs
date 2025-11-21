@@ -65,8 +65,8 @@ public class StageManager : MonoBehaviour
     {
         map.SetActive(false);
         Player.instance.ResetPosition();
-        GameSystemOwner.isClear = GameSystemOwner.isGameOver = false;
         StageMoveSystem.instance.ResetMove();
+        GameSystemOwner.isClear = GameSystemOwner.isGameOver = false;
 
         switch ((SceneManager.SceneType)nextStage)
         {
