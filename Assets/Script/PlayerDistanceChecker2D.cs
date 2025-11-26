@@ -43,8 +43,12 @@ public class PlayerDistanceChecker2D : MonoBehaviour
         // 下方向がヒットしており、かつtriggerDistance以下か？
         bool isDownClose = (distanceDown > 0 && distanceDown <= triggerDistance);
 
+        float gameOverOffset = 0.1f;
+        bool isGameOverCloseUp = (distanceUp > 0 && distanceUp <= (triggerDistance - gameOverOffset));
+        bool isGameOverCloseDown = (distanceDown > 0 && distanceDown <= (triggerDistance - gameOverOffset));
+
         // 3. 上下両方が条件を満たした場合
-        if (isUpClose && isDownClose)
+        if (isGameOverCloseUp && isGameOverCloseDown)
         {
             if (executePerFrame)
             {
@@ -62,6 +66,11 @@ public class PlayerDistanceChecker2D : MonoBehaviour
         {
             // 条件を満たさなくなったら、フラグをリセット（再び範囲内に入ったら実行できるようにする）
             actionTriggered = false;
+        }
+
+        if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) < 0.1f && isDownClose)
+        {
+            GetComponent<Player>().isGrounded = true;
         }
     }
 

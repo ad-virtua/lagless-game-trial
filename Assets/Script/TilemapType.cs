@@ -4,17 +4,13 @@ using UnityEngine.UI;
 
 public class TilemapType : MonoBehaviour
 {
-    public Tilemap tilemap; // Inspectorで割り当て
+    private Tilemap tilemap; // Inspectorで割り当て
     public GameObject core;
     public float startX = 54.0f;
 
     void Start()
     {
-        if (tilemap == null)
-        {
-            Debug.LogError("Tilemap が割り当てられていません。");
-            return;
-        }
+        tilemap = GetComponent<Tilemap>();
 
         // タイルマップ全体の範囲を取得
         BoundsInt bounds = tilemap.cellBounds;
@@ -32,9 +28,16 @@ public class TilemapType : MonoBehaviour
                     // ワールド座標に変換（必要なら）
                     Vector3 worldPos = tilemap.CellToWorld(cellPosition);
 
-                    Debug.Log($"タイル座標: {cellPosition}, ワールド座標: {worldPos}");
-                    GameObject obj = Instantiate(core, worldPos + new Vector3(startX + 0.5f, 0.5f, 0), Quaternion.identity);
-                    obj.transform.parent = tilemap.transform;
+                    if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage1)
+                    {
+                        GameObject obj = Instantiate(core, worldPos + new Vector3(startX + 0.5f, 0.5f, 0), Quaternion.identity);
+                        obj.transform.parent = tilemap.transform;
+                    }
+                    if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage2)
+                    {
+                        GameObject obj = Instantiate(core, worldPos + new Vector3(startX + 0.3f, 0.35f, 0), Quaternion.identity);
+                        obj.transform.parent = tilemap.transform;
+                    }
                 }
             }
         }

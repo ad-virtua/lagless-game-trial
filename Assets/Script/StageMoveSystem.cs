@@ -13,8 +13,9 @@ public class StageMoveSystem : MonoBehaviour
     [HideInInspector] public bool isPlayerScreenMove;
 
     private Vector3 stagePosCount;
+    private Vector2 specialPosCount;
     private float margin = 1f;
-    private Vector2 marginDistance;
+    private Vector2 marginDistanceX, marginDistanceY;
 
     [HideInInspector] public bool isScreenMove;
 
@@ -27,14 +28,15 @@ public class StageMoveSystem : MonoBehaviour
     {
         StageManager.instance.stageAreaCount = 1;
         stagePosCount = new Vector3(0, 0, 0);
-        marginDistance = Vector2.zero;
+        specialPosCount = new Vector3(0, 0, 0);
+        marginDistanceX = marginDistanceY = Vector2.zero;
         playerScreenRangeChecker = player.GetComponent<ScreenRangeChecker>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerScreenRangeChecker && !isPlayerScreenMove && marginDistance == Vector2.zero)
+        if (playerScreenRangeChecker && !isPlayerScreenMove && (marginDistanceX == Vector2.zero || marginDistanceY == Vector2.zero))
         {
             // ここで取得と同時にリセット
             var cameraWasDirection = playerScreenRangeChecker.GetCameraWasDirection();
@@ -43,8 +45,7 @@ public class StageMoveSystem : MonoBehaviour
             {
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 stagePosCount.x += -18f;
-                StageManager.instance.stageAreaCount++;
-               
+                StageManager.instance.stageAreaCount++;  
 
                 if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage1)
                 {
@@ -58,19 +59,20 @@ public class StageMoveSystem : MonoBehaviour
                         StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
                         StartCoroutine(Generic.BigupObj(mouth, 0.2f, 1.5f));
                     }
+
                     if (StageManager.instance.stageAreaCount == 8)
                     {
-                        StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y + 3f, transform.position.z)));
+                        specialPosCount.y += 3f;
                     }
                     else if (StageManager.instance.stageAreaCount == 9)
                     {
-                        StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + 7f, transform.position.y + 9f, transform.position.z)));
+                        specialPosCount.x += 7f;
+                        specialPosCount.y += 9f;
                     }
-                    else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
                 }
-                else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
+                StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + specialPosCount.x, stagePosCount.y + specialPosCount.y, transform.position.z)));
             }
-            else if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Left || cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Up)
+            else if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Left)
             {
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 stagePosCount.x += 18f;
@@ -85,22 +87,54 @@ public class StageMoveSystem : MonoBehaviour
                     }
                     if (StageManager.instance.stageAreaCount == 7)
                     {
-                        StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y - 3f, transform.position.z)));
+                        specialPosCount.y -= 3f;
                     }
-                    else if (StageManager.instance.stageAreaCount == 8)
-                    {
-                        StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y - 9f, transform.position.z)));
-                    }
-                    else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
                 }
-                else StartCoroutine(ScreenMove(new Vector3(stagePosCount.x, transform.position.y, transform.position.z)));
+                StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + specialPosCount.x, stagePosCount.y + specialPosCount.y, transform.position.z)));
+            }
+            else if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Down)
+            {
+                isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
+                StageManager.instance.stageAreaCount++;
+
+                if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage2)
+                {
+                    stagePosCount.y += 9.75f;
+                }
+                StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + specialPosCount.x, stagePosCount.y + specialPosCount.y, transform.position.z)));
+            }
+            else if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Up)
+            {
+                isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
+                StageManager.instance.stageAreaCount--;
+
+                if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage1)
+                {
+                    if (StageManager.instance.stageAreaCount == 8)
+                    {
+                        stagePosCount.x += 18f;
+                        specialPosCount.x -= 7f;
+                        specialPosCount.y -= 9f;
+                    }
+                }
+                if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage2)
+                {
+                    stagePosCount.y -= 9.75f;
+                }
+                StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + specialPosCount.x, stagePosCount.y + specialPosCount.y, transform.position.z)));
             }
         }
 
-        if (marginDistance != Vector2.zero &&
-            Vector2.Distance(marginDistance, new Vector2(player.transform.position.x, player.transform.position.z)) > margin)
+        if (marginDistanceX != Vector2.zero &&
+            Vector2.Distance(marginDistanceX, new Vector2(player.transform.position.x, player.transform.position.z)) > margin)
         {
-            marginDistance = Vector2.zero;
+            marginDistanceX = Vector2.zero;
+            playerScreenRangeChecker.isStop = false;
+        }
+        if (marginDistanceY != Vector2.zero &&
+            Vector2.Distance(marginDistanceY, new Vector2(player.transform.position.y, player.transform.position.z)) > margin)
+        {
+            marginDistanceY = Vector2.zero;
             playerScreenRangeChecker.isStop = false;
         }
     }
@@ -112,7 +146,7 @@ public class StageMoveSystem : MonoBehaviour
             inMouth.SetActive(false);
             transform.position = Vector3.zero;
             stagePosCount = new Vector3(0, 0, 0);
-            marginDistance = Vector2.zero;
+            marginDistanceX = marginDistanceY = Vector2.zero;
             Player.instance.ResetPosition();
         }
     }
@@ -140,7 +174,8 @@ public class StageMoveSystem : MonoBehaviour
         }
 
         isPlayerScreenMove = false;
-        marginDistance = new Vector2(player.transform.position.x, player.transform.position.z);
+        marginDistanceX = new Vector2(player.transform.position.x, player.transform.position.z);
+        marginDistanceY = new Vector2(player.transform.position.y, player.transform.position.z);
     }
 
     IEnumerator StageChangeBigupBlackout(GameObject beforeObj, GameObject afterObj)

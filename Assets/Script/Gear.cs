@@ -5,10 +5,26 @@ using UnityEngine;
 public class Gear : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float moveTime;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        transform.Rotate(0, 0, speed, 0);
+        StartCoroutine(SlowlyMove());
+    }
+
+    IEnumerator SlowlyMove()
+    {
+        float rand = Random.Range(2f, 4f);
+        float time = 0.0f;
+
+        yield return new WaitForSeconds(rand);
+
+        while (time < moveTime)
+        {
+            time += Time.deltaTime;
+            transform.Rotate(0, 0, speed, 0);
+            yield return null;
+        }
+        StartCoroutine(SlowlyMove());
     }
 }

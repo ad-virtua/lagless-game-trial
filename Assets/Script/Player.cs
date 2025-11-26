@@ -6,8 +6,10 @@ public class Player : MonoBehaviour
 {
     public static Player instance;
 
+    public float moveSpeed;
+
     [SerializeField] private Sprite[] idel, run, jump, shot, runShot;
-    [SerializeField] private float moveSpeed, jumpForce, idelAnimSpeed, runAnimSpeed, jumpAnimSpeed, shotAnimSpeed, runShotAnimSpeed;
+    [SerializeField] private float jumpForce, idelAnimSpeed, runAnimSpeed, jumpAnimSpeed, shotAnimSpeed, runShotAnimSpeed;
     [SerializeField] private GameObject shotPoint;
     [SerializeField] private GameObject shotPrefab;
     [SerializeField] private float shotInterval;
@@ -17,7 +19,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Vector3 playerScale;
     private Rigidbody2D rb;
-    private bool isGrounded;
+    public bool isGrounded;
     private float shotIntervalCount;
     public float knockbackForce = 0.01f; // 吹き飛ばす力
 
@@ -25,6 +27,7 @@ public class Player : MonoBehaviour
     private float shotMobileInterval;
     private Vector3 startPosition;
     private Quaternion startRot;
+    private bool isDamage;
 
     enum AnimType
     {
@@ -90,32 +93,38 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
+        if (isDamage) return;
+
+        var jumpInput = Input.GetKeyDown(key: KeyCode.L);
+
         // Aキーを押している間
         if (Input.GetKey(KeyCode.A))
         {
-            if (Input.GetKeyDown(KeyCode.I)) RunShotAnim();
+            if (jumpInput) RunShotAnim();
             if (!isShotMobile) RunAnim();
             transform.localScale = new Vector3(-playerScale.x, playerScale.y, playerScale.z);
             transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
+            rb.velocity = new Vector2(-moveSpeed * Time.deltaTime, rb.velocity.y);
         }
         // Dキーを押している間
         else if (Input.GetKey(KeyCode.D))
         {
-            if (Input.GetKeyDown(KeyCode.I)) RunShotAnim();
+            if (jumpInput) RunShotAnim();
             if (!isShotMobile) RunAnim();
             transform.localScale = playerScale;
             transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
+            rb.velocity = new Vector2(moveSpeed * Time.deltaTime, rb.velocity.y);
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.I)) ShotAnim();
+            if (jumpInput) ShotAnim();
             if (!isShotMobile) IdelAnim();
         }
 
         // ジャンプ（スペースキー）
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            if (!Input.GetKeyDown(KeyCode.I)) JumpAnim();
+            if (!jumpInput) JumpAnim();
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
         }
@@ -201,8 +210,13 @@ public class Player : MonoBehaviour
 
     IEnumerator StealthTime(float interval)
     {
+        isDamage = true;
         gameObject.layer = 8;
-        yield return new WaitForSeconds(interval);
+
+        yield return new WaitForSeconds(interval / 2f);
+        isDamage = false;
+
+        yield return new WaitForSeconds(interval / 2f);
         gameObject.layer = 6;
     }
 

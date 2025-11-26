@@ -6,6 +6,7 @@ public class ScreenRangeChecker : MonoBehaviour
     private bool isInScreen = true;
     private bool wasInScreen = true;
     private Vector3 viewPos;
+    private Vector3 range;
 
     public enum CameraWasDirection
     {
@@ -23,6 +24,7 @@ public class ScreenRangeChecker : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
+        range.y = 0.05f;
     }
 
     void Update()
@@ -37,7 +39,7 @@ public class ScreenRangeChecker : MonoBehaviour
         viewPos = mainCamera.WorldToViewportPoint(transform.position);
 
         isInScreen = (viewPos.x >= 0f && viewPos.x <= 1f &&
-                      viewPos.y >= 0f && viewPos.y <= 1f &&
+                      viewPos.y >= 0f - range.y && viewPos.y <= 1f + range.y &&
                       viewPos.z > 0f);
 
         if (wasInScreen && !isInScreen)
@@ -58,8 +60,8 @@ public class ScreenRangeChecker : MonoBehaviour
         // どの方向に出たかを判定
         if (viewPos.x < 0f) return CameraWasDirection.Left;
         if (viewPos.x > 1f) return CameraWasDirection.Right;
-        if (viewPos.y < 0f) return CameraWasDirection.Down;
-        if (viewPos.y > 1f) return CameraWasDirection.Up;
+        if (viewPos.y < 0f + range.y) return CameraWasDirection.Down;
+        if (viewPos.y > 1f + range.y) return CameraWasDirection.Up;
 
         // 万が一全部範囲内なら中央扱い
         return CameraWasDirection.Center;

@@ -26,7 +26,7 @@ public class SceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sceneType = SceneType.Stage1;
+        sceneType = SceneType.Stage2;
         StageManager.instance.ChangeStage((int)sceneType);
     }
 }
