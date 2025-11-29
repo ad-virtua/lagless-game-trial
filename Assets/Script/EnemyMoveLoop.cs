@@ -7,7 +7,7 @@ public class EnemyMoveLoop : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
 
-    private float startX;
+    private float startX, startY;
     private int direction; // -1 or +1
     private Vector3 startScale;
 
@@ -30,9 +30,11 @@ public class EnemyMoveLoop : MonoBehaviour
         animType = EnemyParameters.AnimType.Run;
 
         startX = transform.localPosition.x;
+        startY = transform.localPosition.y;
 
         Vector3 pos = transform.localPosition;
-        pos.x = Random.Range(startX - enemyParameters.moveLoopDistance, startX + enemyParameters.moveLoopDistance);
+        if (!enemyParameters.isMoveHigh) pos.x = Random.Range(startX - enemyParameters.moveLoopDistance, startX + enemyParameters.moveLoopDistance);
+        else pos.y = Random.Range(startY - enemyParameters.moveLoopDistance, startY + enemyParameters.moveLoopDistance);
         transform.localPosition = pos;
 
         direction = enemyParameters.moveToLeftFirst ? -1 : 1;
@@ -49,17 +51,35 @@ public class EnemyMoveLoop : MonoBehaviour
         Vector3 pos = transform.localPosition;
 
         // 移動
-        pos.x += enemyParameters.moveSpeed * direction * Time.deltaTime;
-        transform.localPosition = pos;
+        if (!enemyParameters.isMoveHigh)
+        {
+            pos.x += enemyParameters.moveSpeed * direction * Time.deltaTime;
+            transform.localPosition = pos;
 
-        // 範囲外に出たら反転
-        if (pos.x >= startX + enemyParameters.moveLoopDistance)
-        {
-            direction = -1;
+            // 範囲外に出たら反転
+            if (pos.x >= startX + enemyParameters.moveLoopDistance)
+            {
+                direction = -1;
+            }
+            else if (pos.x <= startX - enemyParameters.moveLoopDistance)
+            {
+                direction = 1;
+            }
         }
-        else if (pos.x <= startX - enemyParameters.moveLoopDistance)
+        else
         {
-            direction = 1;
+            pos.y += enemyParameters.moveSpeed * direction * Time.deltaTime;
+            transform.localPosition = pos;
+
+            // 範囲外に出たら反転
+            if (pos.y >= startY + enemyParameters.moveLoopDistance)
+            {
+                direction = -1;
+            }
+            else if (pos.y <= startY - enemyParameters.moveLoopDistance)
+            {
+                direction = 1;
+            }
         }
 
         // 見た目の向き反転
@@ -76,6 +96,11 @@ public class EnemyMoveLoop : MonoBehaviour
                 transform.localScale = startScale;
             else
                 transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
+        }
+
+        if (enemyParameters.rotSpeed != 0)
+        {
+            transform.Rotate(0, 0, enemyParameters.rotSpeed);
         }
     }
 

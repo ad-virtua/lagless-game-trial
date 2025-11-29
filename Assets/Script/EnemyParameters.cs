@@ -9,9 +9,11 @@ public class EnemyParameters : ScriptableObject
     public float moveSpeed, jumpForce;
     public float idleAnimSpeed, runAnimSpeed, jumpAnimSpeed;
     public float moveLoopDistance = 3f;
+    public float rotSpeed = 0f;
     public bool moveToLeftFirst = true;
     public bool idelMotion = false;
     public bool isSpriteLeft = true;
+    public bool isMoveHigh = false;
     public int hp;
 
     public enum AnimType { Idle, Run, Jump }

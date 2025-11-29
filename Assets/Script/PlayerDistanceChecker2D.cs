@@ -30,6 +30,7 @@ public class PlayerDistanceChecker2D : MonoBehaviour
     // 1回だけ実行するためのフラグ
     private bool actionTriggered = false;
 
+    [HideInInspector] public bool isDownClose;
 
     void Update()
     {
@@ -41,7 +42,7 @@ public class PlayerDistanceChecker2D : MonoBehaviour
         // 上方向がヒットしており、かつtriggerDistance以下か？
         bool isUpClose = (distanceUp > 0 && distanceUp <= triggerDistance);
         // 下方向がヒットしており、かつtriggerDistance以下か？
-        bool isDownClose = (distanceDown > 0 && distanceDown <= triggerDistance);
+        isDownClose = (distanceDown > 0 && distanceDown <= triggerDistance);
 
         float gameOverOffset = 0.1f;
         bool isGameOverCloseUp = (distanceUp > 0 && distanceUp <= (triggerDistance - gameOverOffset));

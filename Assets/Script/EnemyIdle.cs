@@ -38,6 +38,11 @@ public class EnemyIdle : MonoBehaviour
             float scale = Mathf.Lerp(minScale, maxScale, t);
             transform.localScale = baseScale * scale;
         }
+
+        if (enemyParameters.rotSpeed != 0)
+        {
+            transform.Rotate(0, 0, enemyParameters.rotSpeed);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

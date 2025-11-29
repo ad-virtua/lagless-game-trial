@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
         }
 
         // ジャンプ（スペースキー）
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && GetComponent<PlayerDistanceChecker2D>().isDownClose)
         {
             if (!jumpInput) JumpAnim();
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
