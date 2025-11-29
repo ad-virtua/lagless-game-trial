@@ -24,37 +24,37 @@ public class StageManager : MonoBehaviour
     {
         if (GameSystemOwner.isClear)
         {
-            switch (SceneManager.instance.sceneType)
+            switch (ScenesManagers.sceneType)
             {
-                case SceneManager.SceneType.Stage1:
+                case ScenesManagers.SceneType.Stage1:
                     if (stageAreaCount != stage1EndAreaCount) stageAreaCount = stage1EndAreaCount;
                     break;
-                case SceneManager.SceneType.Stage2:
+                case ScenesManagers.SceneType.Stage2:
                     if (stageAreaCount != stage2EndAreaCount) stageAreaCount = stage1EndAreaCount;
                     break;
-                case SceneManager.SceneType.Stage3:
+                case ScenesManagers.SceneType.Stage3:
                     if (stageAreaCount != stage3EndAreaCount) stageAreaCount = stage1EndAreaCount;
                     break;
             }
         }
     }
 
-    public bool SceneEndAreaChecker(SceneManager.SceneType targetScene = SceneManager.SceneType.NULL)
+    public bool SceneEndAreaChecker(ScenesManagers.SceneType targetScene = ScenesManagers.SceneType.NULL)
     {
-        if (targetScene == SceneManager.SceneType.NULL)
+        if (targetScene == ScenesManagers.SceneType.NULL)
         {
-            targetScene = SceneManager.instance.sceneType;
+            targetScene = ScenesManagers.sceneType;
         }
 
         switch (targetScene)
         {
-            case SceneManager.SceneType.Stage1:
+            case ScenesManagers.SceneType.Stage1:
                 if (stageAreaCount == stage1EndAreaCount) return true;
                 break;
-            case SceneManager.SceneType.Stage2:
+            case ScenesManagers.SceneType.Stage2:
                 if (stageAreaCount == stage2EndAreaCount) return true;
                 break;
-            case SceneManager.SceneType.Stage3:
+            case ScenesManagers.SceneType.Stage3:
                 if (stageAreaCount == stage3EndAreaCount) return true;
                 break;
         }
@@ -67,9 +67,9 @@ public class StageManager : MonoBehaviour
         StageMoveSystem.instance.ResetMove();
         GameSystemOwner.isClear = GameSystemOwner.isGameOver = false;
 
-        switch ((SceneManager.SceneType)nextStage)
+        switch ((ScenesManagers.SceneType)nextStage)
         {
-            case SceneManager.SceneType.Stage1:
+            case ScenesManagers.SceneType.Stage1:
                 foreach (var item in stage1Parts)
                 {
                     item.SetActive(true);
@@ -80,7 +80,7 @@ public class StageManager : MonoBehaviour
                 }
                 stageAreaCount = 1;
                 break;
-            case SceneManager.SceneType.Stage2:
+            case ScenesManagers.SceneType.Stage2:
                 foreach (var item in stage1Parts)
                 {
                     item.SetActive(false);
@@ -91,7 +91,7 @@ public class StageManager : MonoBehaviour
                 }
                 stageAreaCount = 1;
                 break;
-            case SceneManager.SceneType.Stage3:
+            case ScenesManagers.SceneType.Stage3:
                 break;
         }
     }

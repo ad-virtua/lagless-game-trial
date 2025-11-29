@@ -47,7 +47,7 @@ public class StageMoveSystem : MonoBehaviour
                 stagePosCount.x += -18f;
                 StageManager.instance.stageAreaCount++;  
 
-                if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage1)
+                if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage1)
                 {
                     if (StageManager.instance.stageAreaCount == 4 && !tutorialLatter.activeSelf)
                     {
@@ -78,7 +78,7 @@ public class StageMoveSystem : MonoBehaviour
                 stagePosCount.x += 18f;
                 StageManager.instance.stageAreaCount--;
 
-                if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage1)
+                if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage1)
                 {
                     if (StageManager.instance.stageAreaCount < 4)
                     {
@@ -97,7 +97,7 @@ public class StageMoveSystem : MonoBehaviour
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 StageManager.instance.stageAreaCount++;
 
-                if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage2)
+                if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage2)
                 {
                     stagePosCount.y += 9.75f;
                 }
@@ -108,7 +108,7 @@ public class StageMoveSystem : MonoBehaviour
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 StageManager.instance.stageAreaCount--;
 
-                if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage1)
+                if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage1)
                 {
                     if (StageManager.instance.stageAreaCount == 8)
                     {
@@ -117,7 +117,7 @@ public class StageMoveSystem : MonoBehaviour
                         specialPosCount.y -= 9f;
                     }
                 }
-                if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage2)
+                if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage2)
                 {
                     stagePosCount.y -= 9.75f;
                 }
@@ -167,7 +167,7 @@ public class StageMoveSystem : MonoBehaviour
             tutorialLatter.SetActive(true);
         }
 
-        if (StageManager.instance.SceneEndAreaChecker(SceneManager.instance.sceneType))
+        if (StageManager.instance.SceneEndAreaChecker(ScenesManagers.sceneType))
         {
             GameSystemOwner.isClear = true;
             yield break;

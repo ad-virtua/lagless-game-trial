@@ -31,9 +31,9 @@ public class GameSystemOwner : MonoBehaviour
     {
         if (isClear)
         {
-            if (!movieScenes[(int)SceneManager.SceneType.Stage1 - 1].activeSelf)
+            if (!movieScenes[(int)ScenesManagers.SceneType.Stage1 - 1].activeSelf)
             {
-                movieScenes[(int)SceneManager.SceneType.Stage1 - 1].SetActive(true);
+                movieScenes[(int)ScenesManagers.SceneType.Stage1 - 1].SetActive(true);
             }
         }
         else

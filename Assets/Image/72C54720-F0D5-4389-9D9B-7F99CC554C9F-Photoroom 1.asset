@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 72C54720-F0D5-4389-9D9B-7F99CC554C9F-Photoroom
+  m_Name: 72C54720-F0D5-4389-9D9B-7F99CC554C9F-Photoroom 1
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: bdc1c0272d0f446e19ea98da4961f2dd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4a6d8851dec6543a982b76b59daf708e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

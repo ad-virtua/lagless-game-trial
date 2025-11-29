@@ -28,12 +28,12 @@ public class TilemapType : MonoBehaviour
                     // ワールド座標に変換（必要なら）
                     Vector3 worldPos = tilemap.CellToWorld(cellPosition);
 
-                    if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage1)
+                    if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage1)
                     {
                         GameObject obj = Instantiate(core, worldPos + new Vector3(startX + 0.5f, 0.5f, 0), Quaternion.identity);
                         obj.transform.parent = tilemap.transform;
                     }
-                    if (SceneManager.instance.sceneType == SceneManager.SceneType.Stage2)
+                    if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage2)
                     {
                         GameObject obj = Instantiate(core, worldPos + new Vector3(startX + 0.3f, 0.35f, 0), Quaternion.identity);
                         obj.transform.parent = tilemap.transform;
