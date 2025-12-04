@@ -108,8 +108,9 @@ public class EnemyMoveLoop : MonoBehaviour
     {
         if (collision.transform.tag == "Shot")
         {
-            StartCoroutine(Generic.DamageFlash(GetComponent<SpriteRenderer>(), 0.05f, 4));
             Destroy(collision.gameObject);
+            if (hp == 9999) return;
+            StartCoroutine(Generic.DamageFlash(GetComponent<SpriteRenderer>(), 0.05f, 4));
 
             hp--;
             if (hp == 0) Destroy(gameObject);

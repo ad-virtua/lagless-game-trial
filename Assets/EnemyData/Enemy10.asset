@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e5c1553c29854effb3eec60a1c63137, type: 3}
-  m_Name: Enemy4
+  m_Name: Enemy10
   m_EditorClassIdentifier: 
   idle: []
   run:
-  - {fileID: 21300000, guid: 379dea09bbef845b594c38d2cceebfcc, type: 3}
-  - {fileID: 21300000, guid: f4a2d98c5a7f1432eb9c222ace367e43, type: 3}
+  - {fileID: 21300000, guid: 837a01cf70bc4444182be4f86bccd48e, type: 3}
+  - {fileID: 21300000, guid: 4d0b779a0242a414aacba72f3dd6b88e, type: 3}
   jump: []
   moveSpeed: 1
   jumpForce: 0
   idleAnimSpeed: 0
   runAnimSpeed: 0.15
   jumpAnimSpeed: 0
-  moveLoopDistance: 3.5
+  moveLoopDistance: 5.75
   rotSpeed: 0
   followStartRange: 8
   followStopRange: 12
-  turnOffset: 0.8
+  turnOffset: 1.5
   moveToLeftFirst: 1
   idelMotion: 0
   isSpriteLeft: 1
   isMoveHigh: 0
-  hp: 3
+  hp: 5

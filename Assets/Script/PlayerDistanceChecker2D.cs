@@ -34,6 +34,8 @@ public class PlayerDistanceChecker2D : MonoBehaviour
 
     void Update()
     {
+        if (GetComponent<Player>().isPortal) return;
+
         // 1. 上下の距離をそれぞれ計測
         distanceUp = MeasureDistance(Vector2.up);
         distanceDown = MeasureDistance(Vector2.down);

@@ -25,6 +25,10 @@ public class GameSystemOwner : MonoBehaviour
             isGameOver = true;
             gameOverUI.SetActive(true);
         }
+        if (isGameOver && !gameOverUI.activeSelf)
+        {
+            gameOverUI.SetActive(true);
+        }
     }
 
     void CheckClear()

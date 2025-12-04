@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - Water
   - Clear
+  - GameOver
+  - Portal
   layers:
   - Default
   - TransparentFX

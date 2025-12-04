@@ -10,6 +10,9 @@ public class EnemyParameters : ScriptableObject
     public float idleAnimSpeed, runAnimSpeed, jumpAnimSpeed;
     public float moveLoopDistance = 3f;
     public float rotSpeed = 0f;
+    public float followStartRange = 8f;
+    public float followStopRange = 12f;
+    public float turnOffset = 0.8f;
     public bool moveToLeftFirst = true;
     public bool idelMotion = false;
     public bool isSpriteLeft = true;

@@ -45,7 +45,7 @@ public class StageMoveSystem : MonoBehaviour
             {
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 stagePosCount.x += -18f;
-                StageManager.instance.stageAreaCount++;  
+                StageManager.instance.stageAreaCount++;
 
                 if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage1)
                 {
@@ -131,11 +131,19 @@ public class StageMoveSystem : MonoBehaviour
             marginDistanceX = Vector2.zero;
             playerScreenRangeChecker.isStop = false;
         }
-        if (marginDistanceY != Vector2.zero &&
-            Vector2.Distance(marginDistanceY, new Vector2(player.transform.position.y, player.transform.position.z)) > margin)
+
+        if (!Player.instance.isGrounded)
         {
-            marginDistanceY = Vector2.zero;
-            playerScreenRangeChecker.isStop = false;
+            marginDistanceY = new Vector2(player.transform.position.y, player.transform.position.z);
+        }
+        else
+        {
+            if (marginDistanceY != Vector2.zero &&
+                Vector2.Distance(marginDistanceY, new Vector2(player.transform.position.y, player.transform.position.z)) > margin)
+            {
+                marginDistanceY = Vector2.zero;
+                playerScreenRangeChecker.isStop = false;
+            }
         }
     }
 

@@ -14,16 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idle: []
   run:
-  - {fileID: 21300000, guid: 355b1f1658dde46339fda932fb26bf25, type: 3}
-  - {fileID: 21300000, guid: 029d66aaf00dc4a06a4bff02ca6683c5, type: 3}
+  - {fileID: 21300000, guid: 837a01cf70bc4444182be4f86bccd48e, type: 3}
+  - {fileID: 21300000, guid: 4d0b779a0242a414aacba72f3dd6b88e, type: 3}
   jump: []
-  moveSpeed: 2
+  moveSpeed: 1
   jumpForce: 0
   idleAnimSpeed: 0
   runAnimSpeed: 0.15
   jumpAnimSpeed: 0
   moveLoopDistance: 1.5
+  rotSpeed: 0
+  followStartRange: 8
+  followStopRange: 12
+  turnOffset: 1.5
   moveToLeftFirst: 1
   idelMotion: 0
   isSpriteLeft: 1
+  isMoveHigh: 0
   hp: 5

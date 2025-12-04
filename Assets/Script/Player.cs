@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     private Vector3 startPosition;
     private Quaternion startRot;
     private bool isDamage;
+    public bool isPortal;
 
     enum AnimType
     {
@@ -62,10 +64,12 @@ public class Player : MonoBehaviour
 
         if (StageMoveSystem.instance &&
             (StageMoveSystem.instance.isPlayerScreenMove ||
-             StageMoveSystem.instance.isScreenMove))
+             StageMoveSystem.instance.isScreenMove ||
+             isPortal))
         {
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            if (isPortal) GetComponent<BoxCollider2D>().isTrigger = true;
         }
         else
         {
@@ -205,6 +209,22 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Clear"))
         {
             GameSystemOwner.isClear = true;
+        }
+
+        if (collision.gameObject.CompareTag("GameOver"))
+        {
+            GameSystemOwner.isGameOver = true;
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Portal" && !isPortal)
+        {
+            isPortal = true;
+            GetComponent<SpriteRenderer>().enabled = false;
+            StartCoroutine(collision.GetComponent<Portal>().MoveToPosition());
         }
     }
 

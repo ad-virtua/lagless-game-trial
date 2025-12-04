@@ -9,7 +9,8 @@ public class EnemyManager : MonoBehaviour
     {
         MoveLoop,
         Idle,
-        Shutter
+        Shutter,
+        Follow
     }
 
     private void Awake()
@@ -29,6 +30,9 @@ public class EnemyManager : MonoBehaviour
                 break;
             case EnemyType.Shutter:
                 enemy.AddComponent<EnemyShutter>();
+                break;
+            case EnemyType.Follow:
+                enemy.AddComponent<EnemyFollow>();
                 break;
         }
     }
