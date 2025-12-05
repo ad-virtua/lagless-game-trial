@@ -18,6 +18,7 @@ public class EnemyParameters : ScriptableObject
     public bool isSpriteLeft = true;
     public bool isMoveHigh = false;
     public int hp;
+    public GameObject atk;
 
     public enum AnimType { Idle, Run, Jump }
 }
