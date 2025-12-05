@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static ScreenRangeChecker;
 
 public class StageMoveSystem : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class StageMoveSystem : MonoBehaviour
     private Vector2 specialPosCount;
     private float margin = 1f;
     private Vector2 marginDistanceX, marginDistanceY;
+    private CameraWasDirection beforeCameraWasDirection;
 
     [HideInInspector] public bool isScreenMove;
 
@@ -40,8 +42,9 @@ public class StageMoveSystem : MonoBehaviour
         {
             // ここで取得と同時にリセット
             var cameraWasDirection = playerScreenRangeChecker.GetCameraWasDirection();
+            beforeCameraWasDirection = cameraWasDirection;
 
-            if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Right)
+            if (cameraWasDirection == CameraWasDirection.Right)
             {
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 stagePosCount.x += -18f;
@@ -72,7 +75,7 @@ public class StageMoveSystem : MonoBehaviour
                 }
                 StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + specialPosCount.x, stagePosCount.y + specialPosCount.y, transform.position.z)));
             }
-            else if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Left)
+            else if (cameraWasDirection == CameraWasDirection.Left)
             {
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 stagePosCount.x += 18f;
@@ -92,7 +95,7 @@ public class StageMoveSystem : MonoBehaviour
                 }
                 StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + specialPosCount.x, stagePosCount.y + specialPosCount.y, transform.position.z)));
             }
-            else if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Down)
+            else if (cameraWasDirection == CameraWasDirection.Down)
             {
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 StageManager.instance.stageAreaCount++;
@@ -103,7 +106,7 @@ public class StageMoveSystem : MonoBehaviour
                 }
                 StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + specialPosCount.x, stagePosCount.y + specialPosCount.y, transform.position.z)));
             }
-            else if (cameraWasDirection == ScreenRangeChecker.CameraWasDirection.Up)
+            else if (cameraWasDirection == CameraWasDirection.Up)
             {
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 StageManager.instance.stageAreaCount--;
@@ -132,7 +135,9 @@ public class StageMoveSystem : MonoBehaviour
             playerScreenRangeChecker.isStop = false;
         }
 
-        if (!Player.instance.isGrounded)
+        if (!Player.instance.isGrounded &&
+            beforeCameraWasDirection != CameraWasDirection.Up &&
+            beforeCameraWasDirection != CameraWasDirection.Down)
         {
             marginDistanceY = new Vector2(player.transform.position.y, player.transform.position.z);
         }
