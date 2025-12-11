@@ -33,4 +33,20 @@ public class Shot : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Shield")
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Shield")
+        {
+            Destroy(gameObject);
+        }
+    }
 }

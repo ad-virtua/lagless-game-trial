@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Enemy/Parameters")]
 public class EnemyParameters : ScriptableObject
 {
-    public Sprite[] idle, run, jump;
+    public Sprite[] idle, run, jump, atk;
     public float moveSpeed, jumpForce;
     public float idleAnimSpeed, runAnimSpeed, jumpAnimSpeed;
     public float moveLoopDistance = 3f;
@@ -16,9 +16,11 @@ public class EnemyParameters : ScriptableObject
     public bool moveToLeftFirst = true;
     public bool idelMotion = false;
     public bool isSpriteLeft = true;
+    public bool isDirectionLock = true;
     public bool isMoveHigh = false;
+    public bool isCustomAnim = false;
     public int hp;
-    public GameObject atk;
+    public GameObject atkPrefab;
 
     public enum AnimType { Idle, Run, Jump }
 }

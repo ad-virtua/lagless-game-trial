@@ -104,7 +104,6 @@ public class MovieTextGeneration : MonoBehaviour
         textComponent.text = _fullText;
         _typingCoroutine = null;
         IsPlaying = false;
-        onComplete?.Invoke();
     }
 
     IEnumerator TypeTextCoroutine(string text)
@@ -148,7 +147,6 @@ public class MovieTextGeneration : MonoBehaviour
 
         IsPlaying = false;
         _typingCoroutine = null;
-        onComplete?.Invoke();
     }
 
     public void ForceSetText(string text)
@@ -164,8 +162,8 @@ public class MovieTextGeneration : MonoBehaviour
         fadeOut.SetActive(true);
         yield return new WaitForSeconds(intervalTime);
 
-        StageManager.instance.ActiveMap();
         fadeOut.SetActive(false);
         gameObject.SetActive(false);
+        onComplete?.Invoke();
     }
 }

@@ -35,6 +35,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.AddComponent<EnemyFollow>();
                 break;
         }
+        enemy.AddComponent<ScreenRangeChecker>();
     }
 
     public IEnumerator AnimSpeed(SpriteRenderer renderer, Sprite[] targetAnim, float targetSpeed, EnemyParameters.AnimType animType, EnemyParameters.AnimType targetAnimType, bool isNotLoop = false)
@@ -52,4 +53,26 @@ public class EnemyManager : MonoBehaviour
             if (isNotLoop) yield break;
         }
     }
+
+    public IEnumerator Damage(GameObject enemy, int damage)
+    {
+        int hp = 0;
+
+        if (enemy.GetComponent<EnemyMoveLoop>()) hp = enemy.GetComponent<EnemyMoveLoop>().hp -= damage;
+        if (enemy.GetComponent<EnemyIdle>()) hp = enemy.GetComponent<EnemyIdle>().hp -= damage;
+        if (enemy.GetComponent<EnemyShutter>()) hp = enemy.GetComponent<EnemyShutter>().hp -= damage;
+        if (enemy.GetComponent<EnemyFollow>()) hp = enemy.GetComponent<EnemyFollow>().hp -= damage;
+
+        // ★ DamageFlash が終わるまで待つ
+        yield return StartCoroutine(Generic.DamageFlash(
+            enemy.GetComponent<SpriteRenderer>(), 0.05f, 4
+        ));
+
+        // ★ Flash 終了後に Destroy 判定
+        if (hp <= 0)
+        {
+            Destroy(enemy);
+        }
+    }
+
 }

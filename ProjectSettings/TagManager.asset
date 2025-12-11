@@ -11,6 +11,9 @@ TagManager:
   - Clear
   - GameOver
   - Portal
+  - Boss
+  - Atk
+  - Shield
   layers:
   - Default
   - TransparentFX

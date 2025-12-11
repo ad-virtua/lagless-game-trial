@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyShutter : MonoBehaviour
 {
-    private int hp;
+    [HideInInspector] public int hp;
 
     private EnemyTypeSelecter enemyTypeSelecter;
     private EnemyParameters enemyParameters;

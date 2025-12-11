@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class EnemyFollow : MonoBehaviour
 {
+    [HideInInspector] public int hp;
+
     private SpriteRenderer spriteRenderer;
 
     private float startX, startY;
     private int direction; // -1 or +1
     private Vector3 startScale;
-
-    private int hp;
 
     private EnemyTypeSelecter enemyTypeSelecter;
     private EnemyParameters enemyParameters;

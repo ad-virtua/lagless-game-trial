@@ -20,11 +20,13 @@ public class GameSystemOwner : MonoBehaviour
 
     void CheckPlayerActive()
     {
-        if (!isGameOver && !GameObject.FindGameObjectWithTag("Player"))
+        if (isGameOver &&
+            GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>().enabled)
         {
-            isGameOver = true;
-            gameOverUI.SetActive(true);
+            isGameOver = false;
+            gameOverUI.SetActive(false);
         }
+
         if (isGameOver && !gameOverUI.activeSelf)
         {
             gameOverUI.SetActive(true);

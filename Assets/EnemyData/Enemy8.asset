@@ -17,6 +17,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 837a01cf70bc4444182be4f86bccd48e, type: 3}
   - {fileID: 21300000, guid: 4d0b779a0242a414aacba72f3dd6b88e, type: 3}
   jump: []
+  atk: []
   moveSpeed: 1
   jumpForce: 0
   idleAnimSpeed: 0
@@ -30,5 +31,8 @@ MonoBehaviour:
   moveToLeftFirst: 1
   idelMotion: 0
   isSpriteLeft: 1
+  isDirectionLock: 0
   isMoveHigh: 0
+  isCustomAnim: 0
   hp: 5
+  atkPrefab: {fileID: 0}

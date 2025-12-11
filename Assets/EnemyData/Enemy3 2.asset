@@ -17,6 +17,7 @@ MonoBehaviour:
   run:
   - {fileID: 21300000, guid: d925017c98e2f4c55997c94f98d9df40, type: 3}
   jump: []
+  atk: []
   moveSpeed: 2
   jumpForce: 0
   idleAnimSpeed: 0
@@ -24,8 +25,14 @@ MonoBehaviour:
   jumpAnimSpeed: 0
   moveLoopDistance: 7
   rotSpeed: 3
+  followStartRange: 8
+  followStopRange: 12
+  turnOffset: 0.8
   moveToLeftFirst: 0
   idelMotion: 1
   isSpriteLeft: 0
+  isDirectionLock: 0
   isMoveHigh: 0
+  isCustomAnim: 0
   hp: 9999
+  atkPrefab: {fileID: 0}

@@ -189,6 +189,7 @@ public class StageMoveSystem : MonoBehaviour
         isPlayerScreenMove = false;
         marginDistanceX = new Vector2(player.transform.position.x, player.transform.position.z);
         marginDistanceY = new Vector2(player.transform.position.y, player.transform.position.z);
+        Player.instance.SavePos();
     }
 
     IEnumerator StageChangeBigupBlackout(GameObject beforeObj, GameObject afterObj)

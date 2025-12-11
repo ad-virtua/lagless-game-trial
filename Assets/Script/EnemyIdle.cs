@@ -1,9 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyIdle : MonoBehaviour
 {
-    private int hp;
+    [HideInInspector] public int hp;
 
     private EnemyTypeSelecter enemyTypeSelecter;
     private EnemyParameters enemyParameters;
@@ -27,7 +28,7 @@ public class EnemyIdle : MonoBehaviour
 
         baseScale = transform.localScale;
 
-        if (enemyParameters.atk != null) StartCoroutine(ATK(3f));
+        if (enemyParameters.atk != null) StartCoroutine(ATK(3f, 5f));
     }
 
     private void Update()
@@ -47,21 +48,54 @@ public class EnemyIdle : MonoBehaviour
         }
     }
 
-    IEnumerator ATK(float intervalTime)
+    IEnumerator ATK(float atkIntervalTime, float createIntervalTime)
     {
+        List<Vector3> pos = new List<Vector3>();
+        List<Quaternion> rot = new List<Quaternion>();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            pos.Add(transform.GetChild(i).localPosition);
+            rot.Add(transform.GetChild(i).localRotation);
+        }
+
         while (true)
         {
-            yield return new WaitForSeconds(intervalTime);
+            yield return new WaitForSeconds(atkIntervalTime);
 
             if (hp > (startHP / 2))
             {
-                Instantiate(enemyParameters.atk, transform.GetChild(Random.Range(0, transform.childCount)));
+                for (int i = 0; i < transform.childCount / 2; i++)
+                {
+                    transform.GetChild(i).GetComponent<Atk>().StartAtk();
+                }
             }
             else
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    Instantiate(enemyParameters.atk, transform.GetChild(i));
+                    transform.GetChild(i).GetComponent<Atk>().StartAtk();
+                }
+            }
+
+            yield return new WaitForSeconds(createIntervalTime);
+
+            if (hp > (startHP / 2))
+            {
+                for (int i = 0; i < transform.childCount / 2; i++)
+                {
+                    GameObject child = Instantiate(enemyParameters.atkPrefab, transform);
+                    child.transform.localPosition = pos[i];
+                    child.transform.localRotation = rot[i];
+                }
+            }
+            else
+            {
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    GameObject child = Instantiate(enemyParameters.atkPrefab, transform);
+                    child.transform.localPosition = pos[i];
+                    child.transform.localRotation = rot[i];
                 }
             }
         }

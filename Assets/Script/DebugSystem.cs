@@ -16,6 +16,12 @@ public class DebugSystem : MonoBehaviour
         {
             ResetScene(2);
         }
+
+        // 4キーでシーンリセット
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            Player.instance.SaveRestart();
+        }
     }
 
     public void ResetScene(int stageNum)

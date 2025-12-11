@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Player : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class Player : MonoBehaviour
     public bool isGrounded;
     private float shotIntervalCount;
     public float knockbackForce = 0.01f; // 吹き飛ばす力
+
+    private Vector3 savePos;
 
     private bool isShotMobile;
     private float shotMobileInterval;
@@ -53,7 +56,7 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerScale = transform.localScale;
         rb = GetComponent<Rigidbody2D>();
-        startPosition = transform.position;
+        savePos = startPosition = transform.position;
         startRot = transform.rotation;
     }
 
@@ -132,6 +135,11 @@ public class Player : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            SpecialGauge.instance.Skill();
+        }
     }
 
     private void MoveMobile()
@@ -194,7 +202,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (collision.transform.tag == "Enemy" && gameObject.layer == 6)
+        if ((collision.transform.tag == "Enemy" || collision.transform.tag == "Boss") && gameObject.layer == 6)
         {
             ApplyKnockback(collision.transform.position);
             StartCoroutine(StealthTime(1f));
@@ -214,7 +222,8 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("GameOver"))
         {
             GameSystemOwner.isGameOver = true;
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 
@@ -225,6 +234,14 @@ public class Player : MonoBehaviour
             isPortal = true;
             GetComponent<SpriteRenderer>().enabled = false;
             StartCoroutine(collision.GetComponent<Portal>().MoveToPosition());
+        }
+
+        if (collision.transform.tag == "Atk" && gameObject.layer == 6)
+        {
+            ApplyKnockback(collision.transform.position);
+            StartCoroutine(StealthTime(1f));
+            StartCoroutine(Generic.DamageFlash(GetComponent<SpriteRenderer>(), 0.05f, 20));
+            Destroy(collision.gameObject);
         }
     }
 
@@ -363,5 +380,16 @@ public class Player : MonoBehaviour
     {
         transform.position = startPosition;
         transform.rotation = startRot;
+    }
+
+    public void SaveRestart()
+    {
+        transform.position = savePos;
+        GetComponent<SpriteRenderer>().enabled = true;
+    }
+
+    public void SavePos()
+    {
+        savePos = transform.position;
     }
 }

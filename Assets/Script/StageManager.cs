@@ -95,9 +95,4 @@ public class StageManager : MonoBehaviour
                 break;
         }
     }
-
-    public void ActiveMap()
-    {
-        map.SetActive(true);
-    }
 }

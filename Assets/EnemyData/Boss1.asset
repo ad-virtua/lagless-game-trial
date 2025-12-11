@@ -13,23 +13,29 @@ MonoBehaviour:
   m_Name: Boss1
   m_EditorClassIdentifier: 
   idle:
-  - {fileID: 21300000, guid: d925017c98e2f4c55997c94f98d9df40, type: 3}
+  - {fileID: 21300000, guid: 7c4f29e4d57fe4d10a2bc39be74e52b5, type: 3}
   run:
-  - {fileID: 21300000, guid: d925017c98e2f4c55997c94f98d9df40, type: 3}
+  - {fileID: 21300000, guid: 7c4f29e4d57fe4d10a2bc39be74e52b5, type: 3}
+  - {fileID: 21300000, guid: 35d0d539191a341efafca999acb67378, type: 3}
   jump: []
+  atk:
+  - {fileID: 21300000, guid: c8d8c2cfcc67b40d19cf892be334cc16, type: 3}
+  - {fileID: 21300000, guid: a29e0ddb7dc9644958e18f629179efb9, type: 3}
   moveSpeed: 2
   jumpForce: 0
   idleAnimSpeed: 0
-  runAnimSpeed: 0
+  runAnimSpeed: 0.5
   jumpAnimSpeed: 0
-  moveLoopDistance: 3.5
+  moveLoopDistance: 5
   rotSpeed: 0
   followStartRange: 8
   followStopRange: 12
   turnOffset: 0.8
   moveToLeftFirst: 0
   idelMotion: 1
-  isSpriteLeft: 0
+  isSpriteLeft: 1
+  isDirectionLock: 1
   isMoveHigh: 0
+  isCustomAnim: 1
   hp: 50
-  atk: {fileID: 3860378188145979649, guid: 95457323401044f49aa66dbd9076359c, type: 3}
+  atkPrefab: {fileID: 3467629045386610358, guid: 20db8d27bb7694a15bd3bae2080a811f, type: 3}
