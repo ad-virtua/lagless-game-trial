@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Boss1
   m_EditorClassIdentifier: 
   idle:
-  - {fileID: 21300000, guid: 7c4f29e4d57fe4d10a2bc39be74e52b5, type: 3}
+  - {fileID: 21300000, guid: cf9b3400e15b44adaa120944243fbb37, type: 3}
   run:
-  - {fileID: 21300000, guid: 7c4f29e4d57fe4d10a2bc39be74e52b5, type: 3}
-  - {fileID: 21300000, guid: 35d0d539191a341efafca999acb67378, type: 3}
+  - {fileID: 21300000, guid: cf9b3400e15b44adaa120944243fbb37, type: 3}
+  - {fileID: 21300000, guid: a78a11aa662f6443d93b8c0defd85a68, type: 3}
   jump: []
   atk:
-  - {fileID: 21300000, guid: c8d8c2cfcc67b40d19cf892be334cc16, type: 3}
+  - {fileID: 21300000, guid: f969d7f0569474c98a9a50a7a41f3f8b, type: 3}
   - {fileID: 21300000, guid: a29e0ddb7dc9644958e18f629179efb9, type: 3}
   moveSpeed: 2
   jumpForce: 0
