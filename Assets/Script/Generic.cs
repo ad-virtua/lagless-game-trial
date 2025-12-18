@@ -14,6 +14,12 @@ public static class Generic
     {
         for (int i = 0; i < flashing; i++)
         {
+            if (GameSystemOwner.isGameOver)
+            {
+                sr.enabled = false;
+                yield break;
+            }
+
             yield return new WaitForSeconds(waitTime);
 
             sr.enabled = !sr.enabled;

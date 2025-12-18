@@ -1,9 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance;
+
+    [Header("Events")]
+    public UnityEvent InScreen;
 
     public enum EnemyType
     {

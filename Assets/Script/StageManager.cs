@@ -78,6 +78,10 @@ public class StageManager : MonoBehaviour
                 {
                     item.SetActive(false);
                 }
+                foreach (var item in stage3Parts)
+                {
+                    item.SetActive(false);
+                }
                 stageAreaCount = 1;
                 break;
             case ScenesManagers.SceneType.Stage2:
@@ -89,9 +93,26 @@ public class StageManager : MonoBehaviour
                 {
                     item.SetActive(true);
                 }
+                foreach (var item in stage3Parts)
+                {
+                    item.SetActive(false);
+                }
                 stageAreaCount = 1;
                 break;
             case ScenesManagers.SceneType.Stage3:
+                foreach (var item in stage1Parts)
+                {
+                    item.SetActive(false);
+                }
+                foreach (var item in stage2Parts)
+                {
+                    item.SetActive(false);
+                }
+                foreach (var item in stage3Parts)
+                {
+                    item.SetActive(true);
+                }
+                stageAreaCount = 1;
                 break;
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static ScenesManagers;
 using static ScreenRangeChecker;
 
 public class StageMoveSystem : MonoBehaviour
@@ -9,6 +10,7 @@ public class StageMoveSystem : MonoBehaviour
     [SerializeField] private GameObject player, mouth, inMouth;
     [SerializeField] private GameObject tutorialStarted, tutorialLatter;
     [SerializeField] private float directionSpeed;
+    [SerializeField] private GameObject flash;
 
     private ScreenRangeChecker playerScreenRangeChecker;
     [HideInInspector] public bool isPlayerScreenMove;
@@ -198,5 +200,28 @@ public class StageMoveSystem : MonoBehaviour
         yield return StartCoroutine(Generic.BlackOut(beforeObj.GetComponent<SpriteRenderer>(), 0.02f));
         beforeObj.SetActive(false);
         afterObj.SetActive(true);
+    }
+
+    public IEnumerator BossClear()
+    {
+        isPlayerScreenMove = true;
+        StartCoroutine(Generic.Shake(0.5f, 0.1f, Camera.main.gameObject, false));
+        flash.SetActive(false);
+        flash.SetActive(true);
+        yield return new WaitForSeconds(2f);
+
+        var gears = GameObject.FindGameObjectsWithTag("Gear");
+
+        foreach (var gear in gears)
+        {
+            gear.GetComponent<Gear>().ChangeImage();
+        }
+
+        yield return new WaitForSeconds(1f);
+        flash.SetActive(false);
+        isPlayerScreenMove = false;
+
+        yield return new WaitForSeconds(2f);
+        StageManager.instance.ChangeStage(3);
     }
 }

@@ -56,6 +56,7 @@ public class EnemyMoveLoop : MonoBehaviour
             if (!GetComponent<ScreenRangeChecker>().IsInScreen()) return;
             else
             {
+                EnemyManager.instance.InScreen?.Invoke();
                 isPlayerDistanceRange = true;
                 if (enemyParameters.atk != null && enemyParameters.atk.Length != 0) StartCoroutine(ATK(3f, 5f));
             }
@@ -155,7 +156,7 @@ public class EnemyMoveLoop : MonoBehaviour
             }
 
             yield return new WaitForSeconds(createIntervalTime / 2f);
-            spriteRenderer.sprite = enemyParameters.run[0];
+            StartCoroutine(EnemyManager.instance.AnimSpeed(spriteRenderer, enemyParameters.run, enemyParameters.runAnimSpeed, animType, EnemyParameters.AnimType.Run));
 
             foreach (Transform child in transform)
             {
@@ -181,7 +182,14 @@ public class EnemyMoveLoop : MonoBehaviour
             StartCoroutine(Generic.DamageFlash(GetComponent<SpriteRenderer>(), 0.05f, 4));
 
             hp--;
-            if (hp == 0) Destroy(gameObject);
+            if (hp < 0)
+            {
+                if (gameObject.tag == "Boss")
+                {
+                    StartCoroutine(StageMoveSystem.instance.BossClear());
+                }
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Gear : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float moveTime;
+    [SerializeField] private Sprite changeSprite;
 
     private void Start()
     {
@@ -26,5 +28,10 @@ public class Gear : MonoBehaviour
             yield return null;
         }
         StartCoroutine(SlowlyMove());
+    }
+
+    public void ChangeImage()
+    {
+        GetComponent<SpriteRenderer>().sprite = changeSprite;
     }
 }

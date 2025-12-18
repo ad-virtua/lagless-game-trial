@@ -17,6 +17,12 @@ public class DebugSystem : MonoBehaviour
             ResetScene(2);
         }
 
+        // 3キーでシーンリセット
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            ResetScene(3);
+        }
+
         // 4キーでシーンリセット
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {

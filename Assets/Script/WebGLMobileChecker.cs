@@ -7,6 +7,7 @@ public class WebGLMobileChecker : MonoBehaviour
     [DllImport("__Internal")]
     public static extern bool IsMobile();
 
+    [SerializeField] private GameObject pcCanvas;
     [SerializeField] private GameObject mobileCanvas;
 
     void Start()
@@ -27,11 +28,13 @@ public class WebGLMobileChecker : MonoBehaviour
         // WebGL以外のプラットフォームでの動作
         if (Application.isMobilePlatform)
         {
+            pcCanvas.SetActive(false);
             mobileCanvas.SetActive(true);
             Debug.Log("Unity: モバイルデバイスと判定");
         }
         else
         {
+            pcCanvas.SetActive(true);
             mobileCanvas.SetActive(false);
             Debug.Log("Unity: PCと判定");
         }
