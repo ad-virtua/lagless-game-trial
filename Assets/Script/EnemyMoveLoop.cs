@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using static EnemyParameters;
-using static UnityEditor.PlayerSettings;
 
 public class EnemyMoveLoop : MonoBehaviour
 {
