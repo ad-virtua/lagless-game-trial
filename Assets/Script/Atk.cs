@@ -1,9 +1,32 @@
+using System.Collections;
 using UnityEngine;
 
 public class Atk : MonoBehaviour
 {
-    [Tooltip("発射する強さ（Rigidbody2Dに加える力）")]
     public float launchForce = 10f;
+
+    public IEnumerator StandbyLerp(Vector3 target, float duration)
+    {
+        if (duration <= 0f)
+        {
+            transform.localPosition = target;
+            yield break;
+        }
+
+        Vector3 start = Vector3.zero;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            if (this == null) yield break; // 破棄対策
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            transform.localPosition = Vector3.Lerp(start, target, t);
+            yield return null;
+        }
+
+        transform.localPosition = target;
+    }
 
     public void StartAtk()
     {

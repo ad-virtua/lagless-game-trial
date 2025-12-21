@@ -52,7 +52,7 @@ public class StageMoveSystem : MonoBehaviour
                 stagePosCount.x += -18f;
                 StageManager.instance.stageAreaCount++;
 
-                if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage1)
+                if (sceneType == SceneType.Stage1)
                 {
                     if (StageManager.instance.stageAreaCount == 4 && !tutorialLatter.activeSelf)
                     {
@@ -83,7 +83,7 @@ public class StageMoveSystem : MonoBehaviour
                 stagePosCount.x += 18f;
                 StageManager.instance.stageAreaCount--;
 
-                if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage1)
+                if (sceneType == SceneType.Stage1)
                 {
                     if (StageManager.instance.stageAreaCount < 4)
                     {
@@ -102,7 +102,7 @@ public class StageMoveSystem : MonoBehaviour
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 StageManager.instance.stageAreaCount++;
 
-                if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage2)
+                if (sceneType == SceneType.Stage2)
                 {
                     stagePosCount.y += 9.75f;
                 }
@@ -113,7 +113,7 @@ public class StageMoveSystem : MonoBehaviour
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 StageManager.instance.stageAreaCount--;
 
-                if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage1)
+                if (sceneType == SceneType.Stage1)
                 {
                     if (StageManager.instance.stageAreaCount == 8)
                     {
@@ -122,7 +122,7 @@ public class StageMoveSystem : MonoBehaviour
                         specialPosCount.y -= 9f;
                     }
                 }
-                if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage2)
+                if (sceneType == SceneType.Stage2)
                 {
                     stagePosCount.y -= 9.75f;
                 }
@@ -202,22 +202,33 @@ public class StageMoveSystem : MonoBehaviour
         afterObj.SetActive(true);
     }
 
-    public IEnumerator BossClear()
+    public IEnumerator BossClear(GameObject enemy)
     {
         isPlayerScreenMove = true;
+        GameSystemOwner.isClear = true;
         StartCoroutine(Generic.Shake(0.5f, 0.1f, Camera.main.gameObject, false));
+        yield return new WaitForSeconds(2f);
+
         flash.SetActive(false);
         flash.SetActive(true);
         yield return new WaitForSeconds(2f);
 
-        var gears = GameObject.FindGameObjectsWithTag("Gear");
+        enemy.GetComponent<SpriteRenderer>().enabled = false;
 
+        var gears = GameObject.FindGameObjectsWithTag("Gear");
         foreach (var gear in gears)
         {
             gear.GetComponent<Gear>().ChangeImage();
         }
+        var atks = GameObject.FindGameObjectsWithTag("Atk");
+        foreach (var atk in atks)
+        {
+            Destroy(atk);
+        }
 
-        yield return new WaitForSeconds(1f);
+        flash.GetComponent<Animator>().SetTrigger("isFadeOut");
+        yield return new WaitForSeconds(3f);
+
         flash.SetActive(false);
         isPlayerScreenMove = false;
 

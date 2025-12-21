@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static EnemyParameters;
+using static UnityEditor.PlayerSettings;
 
 public class EnemyMoveLoop : MonoBehaviour
 {
@@ -19,7 +22,7 @@ public class EnemyMoveLoop : MonoBehaviour
     private EnemyParameters enemyParameters;
 
     [HideInInspector]
-    public EnemyParameters.AnimType animType;
+    public AnimType animType;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +33,7 @@ public class EnemyMoveLoop : MonoBehaviour
         startHP = hp = enemyParameters.hp;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animType = EnemyParameters.AnimType.Run;
+        animType = AnimType.Run;
 
         startX = transform.localPosition.x;
         startY = transform.localPosition.y;
@@ -43,20 +46,22 @@ public class EnemyMoveLoop : MonoBehaviour
         direction = enemyParameters.moveToLeftFirst ? -1 : 1;
         startScale = transform.localScale;
 
-        if (!enemyParameters.isCustomAnim) StartCoroutine(EnemyManager.instance.AnimSpeed(spriteRenderer, enemyParameters.run, enemyParameters.runAnimSpeed, animType, EnemyParameters.AnimType.Run));
+        StartCoroutine(AnimSpeed(enemyParameters.run, enemyParameters.runAnimSpeed, AnimType.Run));
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (StageMoveSystem.instance.isScreenMove) return;
+        if (StageMoveSystem.instance.isScreenMove || GameSystemOwner.isClear) return;
 
         if (GetComponent<ScreenRangeChecker>() && !isPlayerDistanceRange)
         {
+            isPlayerDistanceRange = true;
+            if (enemyParameters.atk != null && enemyParameters.atk.Length != 0) StartCoroutine(ATK(3f, 5f));
             if (!GetComponent<ScreenRangeChecker>().IsInScreen()) return;
             else
             {
-                EnemyManager.instance.InScreen?.Invoke();
+                if (transform.tag == "Boss") EnemyManager.instance.InScreen?.Invoke();
                 isPlayerDistanceRange = true;
                 if (enemyParameters.atk != null && enemyParameters.atk.Length != 0) StartCoroutine(ATK(3f, 5f));
             }
@@ -134,29 +139,34 @@ public class EnemyMoveLoop : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(atkIntervalTime / 2f);
+            animType = AnimType.ATK;
+            yield return new WaitForSeconds(atkIntervalTime / 4f);
+            if (GameSystemOwner.isClear) yield break;
             spriteRenderer.sprite = enemyParameters.atk[0];
 
-            yield return new WaitForSeconds(atkIntervalTime / 2f);
+            yield return new WaitForSeconds(atkIntervalTime / 4f);
+            if (GameSystemOwner.isClear) yield break;
             spriteRenderer.sprite = enemyParameters.atk[1];
 
             if (hp > (startHP / 2))
             {
                 for (int i = 0; i < transform.childCount / 2; i++)
                 {
-                    transform.GetChild(i).GetComponent<Atk>().StartAtk();
+                    if (transform.GetChild(i).GetComponent<Atk>()) transform.GetChild(i).GetComponent<Atk>().StartAtk();
                 }
             }
             else
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    transform.GetChild(i).GetComponent<Atk>().StartAtk();
+                    if (transform.GetChild(i).GetComponent<Atk>()) transform.GetChild(i).GetComponent<Atk>().StartAtk();
                 }
             }
 
-            yield return new WaitForSeconds(createIntervalTime / 2f);
-            StartCoroutine(EnemyManager.instance.AnimSpeed(spriteRenderer, enemyParameters.run, enemyParameters.runAnimSpeed, animType, EnemyParameters.AnimType.Run));
+            yield return new WaitForSeconds(createIntervalTime / 4f);
+            if (GameSystemOwner.isClear) yield break;
+            animType = AnimType.Run;
+            StartCoroutine(AnimSpeed(enemyParameters.run, enemyParameters.runAnimSpeed, AnimType.Run));
 
             foreach (Transform child in transform)
             {
@@ -165,11 +175,12 @@ public class EnemyMoveLoop : MonoBehaviour
             for (int i = 0; i < pos.Count; i++)
             {
                 GameObject child = Instantiate(enemyParameters.atkPrefab, transform);
-                child.transform.localPosition = pos[i];
+                child.transform.localPosition = Vector3.zero;
                 child.transform.localRotation = rot[i];
+                StartCoroutine(child.GetComponent<Atk>().StandbyLerp(pos[i], 1f));
+                yield return new WaitForSeconds(0.5f);
             }
-
-            yield return new WaitForSeconds(createIntervalTime / 2f);
+            yield return new WaitForSeconds(createIntervalTime / 4f);
         }
     }
 
@@ -180,16 +191,37 @@ public class EnemyMoveLoop : MonoBehaviour
             Destroy(collision.gameObject);
             if (hp == 9999) return;
             StartCoroutine(Generic.DamageFlash(GetComponent<SpriteRenderer>(), 0.05f, 4));
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                StartCoroutine(Generic.DamageFlash(transform.GetChild(i).GetComponent<SpriteRenderer>(), 0.05f, 4));
+            }
 
             hp--;
             if (hp < 0)
             {
                 if (gameObject.tag == "Boss")
                 {
-                    StartCoroutine(StageMoveSystem.instance.BossClear());
+                    StartCoroutine(StageMoveSystem.instance.BossClear(gameObject));
                 }
-                Destroy(gameObject);
+                else Destroy(gameObject);
             }
+        }
+    }
+
+    public IEnumerator AnimSpeed(Sprite[] targetAnim, float targetSpeed, AnimType targetAnimType, bool isNotLoop = false)
+    {
+        while (animType == targetAnimType)
+        {
+            for (int i = 0; i < targetAnim.Length; i++)
+            {
+                if (animType != targetAnimType) yield break;
+                if (GameSystemOwner.isClear) yield break;
+                spriteRenderer.sprite = targetAnim[i];
+
+                yield return new WaitForSeconds(targetSpeed);
+            }
+
+            if (isNotLoop) yield break;
         }
     }
 }

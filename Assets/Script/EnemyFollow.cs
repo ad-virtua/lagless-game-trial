@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using static EnemyParameters;
 
 public class EnemyFollow : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class EnemyFollow : MonoBehaviour
     private EnemyParameters enemyParameters;
 
     [HideInInspector]
-    public EnemyParameters.AnimType animType;
+    public AnimType animType;
 
     private Transform player;
     private Camera mainCam;
@@ -31,7 +33,7 @@ public class EnemyFollow : MonoBehaviour
         hp = enemyParameters.hp;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animType = EnemyParameters.AnimType.Run;
+        animType = AnimType.Run;
 
         startX = transform.localPosition.x;
         startY = transform.localPosition.y;
@@ -47,12 +49,10 @@ public class EnemyFollow : MonoBehaviour
         direction = enemyParameters.moveToLeftFirst ? -1 : 1;
         startScale = transform.localScale;
 
-        StartCoroutine(EnemyManager.instance.AnimSpeed(
-            spriteRenderer,
+        StartCoroutine(AnimSpeed(
             enemyParameters.run,
             enemyParameters.runAnimSpeed,
-            animType,
-            EnemyParameters.AnimType.Run));
+            AnimType.Run));
     }
 
     void Update()
@@ -186,6 +186,22 @@ public class EnemyFollow : MonoBehaviour
 
             hp--;
             if (hp == 0) Destroy(gameObject);
+        }
+    }
+
+    public IEnumerator AnimSpeed(Sprite[] targetAnim, float targetSpeed, AnimType targetAnimType, bool isNotLoop = false)
+    {
+        while (animType == targetAnimType)
+        {
+            for (int i = 0; i < targetAnim.Length; i++)
+            {
+                if (animType != targetAnimType) yield break;
+                spriteRenderer.sprite = targetAnim[i];
+
+                yield return new WaitForSeconds(targetSpeed);
+            }
+
+            if (isNotLoop) yield break;
         }
     }
 }

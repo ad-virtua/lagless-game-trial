@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: ATK
   m_EditorClassIdentifier: 
   idle: []
-  run:
-  - {fileID: 21300000, guid: 67f2bbd8f675343c4b8f561594608512, type: 3}
+  run: []
   jump: []
   atk: []
+  end: []
   moveSpeed: 1
   jumpForce: 0
   idleAnimSpeed: 0
@@ -30,5 +30,8 @@ MonoBehaviour:
   moveToLeftFirst: 0
   idelMotion: 0
   isSpriteLeft: 0
+  isDirectionLock: 1
   isMoveHigh: 0
+  isCustomAnim: 0
   hp: 1
+  atkPrefab: {fileID: 0}

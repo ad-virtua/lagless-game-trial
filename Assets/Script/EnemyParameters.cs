@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Enemy/Parameters")]
 public class EnemyParameters : ScriptableObject
 {
-    public Sprite[] idle, run, jump, atk;
+    public Sprite[] idle, run, jump, atk, end;
     public float moveSpeed, jumpForce;
     public float idleAnimSpeed, runAnimSpeed, jumpAnimSpeed;
     public float moveLoopDistance = 3f;
@@ -22,5 +22,5 @@ public class EnemyParameters : ScriptableObject
     public int hp;
     public GameObject atkPrefab;
 
-    public enum AnimType { Idle, Run, Jump }
+    public enum AnimType { Idle, Run, Jump, ATK }
 }

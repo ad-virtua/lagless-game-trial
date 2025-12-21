@@ -9,9 +9,6 @@ public class EnemyShutter : MonoBehaviour
     private EnemyTypeSelecter enemyTypeSelecter;
     private EnemyParameters enemyParameters;
 
-    [HideInInspector]
-    public EnemyParameters.AnimType animType;
-
     private Vector3 startPos = new Vector3();
 
     // Start is called before the first frame update

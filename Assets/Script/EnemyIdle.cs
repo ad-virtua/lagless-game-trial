@@ -9,9 +9,6 @@ public class EnemyIdle : MonoBehaviour
     private EnemyTypeSelecter enemyTypeSelecter;
     private EnemyParameters enemyParameters;
 
-    [HideInInspector]
-    public EnemyParameters.AnimType animType;
-
     private float minScale = 0.95f;  // 最小スケール
     private float maxScale = 1.05f;  // 最大スケール
     private float speed = 2f;     // スピード
@@ -50,6 +47,12 @@ public class EnemyIdle : MonoBehaviour
 
     IEnumerator ATK(float atkIntervalTime, float createIntervalTime)
     {
+        if (enemyParameters.atkPrefab == null)
+        {
+            Debug.LogWarning($"EnemyIdle ATK skipped: atkPrefab not set for {name}");
+            yield break;
+        }
+
         List<Vector3> pos = new List<Vector3>();
         List<Quaternion> rot = new List<Quaternion>();
 
@@ -63,40 +66,30 @@ public class EnemyIdle : MonoBehaviour
         {
             yield return new WaitForSeconds(atkIntervalTime);
 
-            if (hp > (startHP / 2))
+            bool isHighHP = hp > (startHP / 2);
+            int currentChildCount = transform.childCount;
+            int usableCount = Mathf.Min(currentChildCount, pos.Count);
+            int atkCount = isHighHP ? usableCount / 2 : usableCount;
+
+            for (int i = 0; i < atkCount; i++)
             {
-                for (int i = 0; i < transform.childCount / 2; i++)
-                {
-                    transform.GetChild(i).GetComponent<Atk>().StartAtk();
-                }
-            }
-            else
-            {
-                for (int i = 0; i < transform.childCount; i++)
-                {
-                    transform.GetChild(i).GetComponent<Atk>().StartAtk();
-                }
+                if (transform.GetChild(i).TryGetComponent<Atk>(out var atk)) atk.StartAtk();
             }
 
             yield return new WaitForSeconds(createIntervalTime);
 
-            if (hp > (startHP / 2))
+            // 古い子を破棄して増殖を防ぐ
+            foreach (Transform child in transform)
             {
-                for (int i = 0; i < transform.childCount / 2; i++)
-                {
-                    GameObject child = Instantiate(enemyParameters.atkPrefab, transform);
-                    child.transform.localPosition = pos[i];
-                    child.transform.localRotation = rot[i];
-                }
+                Destroy(child.gameObject);
             }
-            else
+
+            int spawnCount = isHighHP ? pos.Count / 2 : pos.Count;
+            for (int i = 0; i < spawnCount; i++)
             {
-                for (int i = 0; i < transform.childCount; i++)
-                {
-                    GameObject child = Instantiate(enemyParameters.atkPrefab, transform);
-                    child.transform.localPosition = pos[i];
-                    child.transform.localRotation = rot[i];
-                }
+                GameObject child = Instantiate(enemyParameters.atkPrefab, transform);
+                child.transform.localPosition = pos[i];
+                child.transform.localRotation = rot[i];
             }
         }
     }

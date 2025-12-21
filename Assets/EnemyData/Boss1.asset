@@ -21,6 +21,7 @@ MonoBehaviour:
   atk:
   - {fileID: 21300000, guid: f969d7f0569474c98a9a50a7a41f3f8b, type: 3}
   - {fileID: 21300000, guid: a29e0ddb7dc9644958e18f629179efb9, type: 3}
+  end: []
   moveSpeed: 2
   jumpForce: 0
   idleAnimSpeed: 0

@@ -42,22 +42,6 @@ public class EnemyManager : MonoBehaviour
         enemy.AddComponent<ScreenRangeChecker>();
     }
 
-    public IEnumerator AnimSpeed(SpriteRenderer renderer, Sprite[] targetAnim, float targetSpeed, EnemyParameters.AnimType animType, EnemyParameters.AnimType targetAnimType, bool isNotLoop = false)
-    {
-        while (animType == targetAnimType)
-        {
-            for (int i = 0; i < targetAnim.Length; i++)
-            {
-                if (animType != targetAnimType) yield break;
-                renderer.sprite = targetAnim[i];
-
-                yield return new WaitForSeconds(targetSpeed);
-            }
-
-            if (isNotLoop) yield break;
-        }
-    }
-
     public IEnumerator Damage(GameObject enemy, int damage)
     {
         int hp = 0;
