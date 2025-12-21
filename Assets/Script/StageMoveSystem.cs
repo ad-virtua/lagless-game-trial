@@ -227,10 +227,10 @@ public class StageMoveSystem : MonoBehaviour
         }
 
         flash.GetComponent<Animator>().SetTrigger("isFadeOut");
-        yield return new WaitForSeconds(3f);
-
-        flash.SetActive(false);
         isPlayerScreenMove = false;
+
+        yield return new WaitForSeconds(3f);
+        flash.SetActive(false);
 
         yield return new WaitForSeconds(2f);
         StageManager.instance.ChangeStage(3);

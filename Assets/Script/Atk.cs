@@ -19,6 +19,8 @@ public class Atk : MonoBehaviour
         while (elapsed < duration)
         {
             if (this == null) yield break; // 破棄対策
+            if (GameSystemOwner.isClear) yield break;
+
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
             transform.localPosition = Vector3.Lerp(start, target, t);

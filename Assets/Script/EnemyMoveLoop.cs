@@ -55,8 +55,6 @@ public class EnemyMoveLoop : MonoBehaviour
 
         if (GetComponent<ScreenRangeChecker>() && !isPlayerDistanceRange)
         {
-            isPlayerDistanceRange = true;
-            if (enemyParameters.atk != null && enemyParameters.atk.Length != 0) StartCoroutine(ATK(3f, 5f));
             if (!GetComponent<ScreenRangeChecker>().IsInScreen()) return;
             else
             {
