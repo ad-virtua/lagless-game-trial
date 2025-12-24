@@ -8,10 +8,17 @@ public class Gear : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float moveTime;
     [SerializeField] private Sprite changeSprite;
+    [SerializeField] private float boostSpeed;
 
     private void Start()
     {
         StartCoroutine(SlowlyMove());
+    }
+
+    private void Update()
+    {
+        if (!GameSystemOwner.isClear || GetComponent<SpriteRenderer>().sprite != changeSprite) return;
+        transform.Rotate(0, 0, speed * boostSpeed, 0);
     }
 
     IEnumerator SlowlyMove()
@@ -23,6 +30,7 @@ public class Gear : MonoBehaviour
 
         while (time < moveTime)
         {
+            if (GameSystemOwner.isClear) yield break;
             time += Time.deltaTime;
             transform.Rotate(0, 0, speed, 0);
             yield return null;

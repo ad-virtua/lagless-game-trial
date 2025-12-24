@@ -15,6 +15,7 @@ TagManager:
   - Atk
   - Shield
   - Gear
+  - Movie
   layers:
   - Default
   - TransparentFX

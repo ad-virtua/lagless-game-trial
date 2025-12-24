@@ -137,7 +137,7 @@ public class StageMoveSystem : MonoBehaviour
             playerScreenRangeChecker.isStop = false;
         }
 
-        if (!GetComponent<Player>().isPortal &&
+        if (!player.GetComponent<Player>().isPortal &&
             !Player.instance.isGrounded &&
             beforeCameraWasDirection != CameraWasDirection.Up &&
             beforeCameraWasDirection != CameraWasDirection.Down)

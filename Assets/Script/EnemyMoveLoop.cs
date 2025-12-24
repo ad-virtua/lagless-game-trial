@@ -19,6 +19,12 @@ public class EnemyMoveLoop : MonoBehaviour
 
     private EnemyTypeSelecter enemyTypeSelecter;
     private EnemyParameters enemyParameters;
+    private ScreenRangeChecker screenRangeChecker;
+
+    // ATK用に初期位置とコンポーネントをキャッシュしておく（毎ループのInstantiate/Destroyを回避）
+    private readonly List<Atk> atkChildren = new List<Atk>();
+    private readonly List<Vector3> atkStartPos = new List<Vector3>();
+    private readonly List<Quaternion> atkStartRot = new List<Quaternion>();
 
     [HideInInspector]
     public AnimType animType;
@@ -32,7 +38,10 @@ public class EnemyMoveLoop : MonoBehaviour
         startHP = hp = enemyParameters.hp;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+        screenRangeChecker = GetComponent<ScreenRangeChecker>();
         animType = AnimType.Run;
+
+        CacheAtkChildren();
 
         startX = transform.localPosition.x;
         startY = transform.localPosition.y;
@@ -51,11 +60,11 @@ public class EnemyMoveLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (StageMoveSystem.instance.isScreenMove || GameSystemOwner.isClear) return;
+        if (StageMoveSystem.instance.isScreenMove || GameSystemOwner.isClear || GameSystemOwner.instance.IsPlayMovie()) return;
 
-        if (GetComponent<ScreenRangeChecker>() && !isPlayerDistanceRange)
+        if (screenRangeChecker && !isPlayerDistanceRange)
         {
-            if (!GetComponent<ScreenRangeChecker>().IsInScreen()) return;
+            if (!screenRangeChecker.IsInScreen()) return;
             else
             {
                 if (transform.tag == "Boss") EnemyManager.instance.InScreen?.Invoke();
@@ -136,48 +145,82 @@ public class EnemyMoveLoop : MonoBehaviour
 
         while (true)
         {
+            // ムービー中は待機
+            yield return StartCoroutine(WaitWhileMovie());
+
             animType = AnimType.ATK;
             yield return new WaitForSeconds(atkIntervalTime / 4f);
             if (GameSystemOwner.isClear) yield break;
+
+            yield return StartCoroutine(WaitWhileMovie());
             spriteRenderer.sprite = enemyParameters.atk[0];
 
             yield return new WaitForSeconds(atkIntervalTime / 4f);
             if (GameSystemOwner.isClear) yield break;
+
+            yield return StartCoroutine(WaitWhileMovie());
             spriteRenderer.sprite = enemyParameters.atk[1];
+
+            // 攻撃発射
+            yield return StartCoroutine(WaitWhileMovie());
 
             if (hp > (startHP / 2))
             {
                 for (int i = 0; i < transform.childCount / 2; i++)
                 {
-                    if (transform.GetChild(i).GetComponent<Atk>()) transform.GetChild(i).GetComponent<Atk>().StartAtk();
+                    Atk atk = transform.GetChild(i).GetComponent<Atk>();
+                    if (atk) atk.StartAtk();
                 }
             }
             else
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    if (transform.GetChild(i).GetComponent<Atk>()) transform.GetChild(i).GetComponent<Atk>().StartAtk();
+                    Atk atk = transform.GetChild(i).GetComponent<Atk>();
+                    if (atk) atk.StartAtk();
                 }
             }
 
             yield return new WaitForSeconds(createIntervalTime / 4f);
             if (GameSystemOwner.isClear) yield break;
+
+            yield return StartCoroutine(WaitWhileMovie());
             animType = AnimType.Run;
-            StartCoroutine(AnimSpeed(enemyParameters.run, enemyParameters.runAnimSpeed, AnimType.Run));
+            StartCoroutine(
+                AnimSpeed(enemyParameters.run, enemyParameters.runAnimSpeed, AnimType.Run)
+            );
 
             foreach (Transform child in transform)
             {
                 Destroy(child.gameObject);
             }
+
             for (int i = 0; i < pos.Count; i++)
             {
+                yield return StartCoroutine(WaitWhileMovie());
+
                 GameObject child = Instantiate(enemyParameters.atkPrefab, transform);
                 child.transform.localPosition = Vector3.zero;
                 child.transform.localRotation = rot[i];
-                StartCoroutine(child.GetComponent<Atk>().StandbyLerp(pos[i], 1f));
+
+                StartCoroutine(
+                    child.GetComponent<Atk>().StandbyLerp(pos[i], 1f)
+                );
+
                 yield return new WaitForSeconds(0.5f);
             }
+
             yield return new WaitForSeconds(createIntervalTime / 4f);
+        }
+    }
+
+    IEnumerator WaitWhileMovie()
+    {
+        while (GameSystemOwner.instance != null &&
+               GameSystemOwner.instance.IsPlayMovie())
+        {
+            if (GameSystemOwner.isClear) yield break;
+            yield return null;
         }
     }
 
@@ -187,7 +230,7 @@ public class EnemyMoveLoop : MonoBehaviour
         {
             Destroy(collision.gameObject);
             if (hp == 9999) return;
-            StartCoroutine(Generic.DamageFlash(GetComponent<SpriteRenderer>(), 0.05f, 4));
+            StartCoroutine(Generic.DamageFlash(spriteRenderer, 0.05f, 4));
             for (int i = 0; i < transform.childCount; i++)
             {
                 StartCoroutine(Generic.DamageFlash(transform.GetChild(i).GetComponent<SpriteRenderer>(), 0.05f, 4));
@@ -203,6 +246,51 @@ public class EnemyMoveLoop : MonoBehaviour
                 else Destroy(gameObject);
             }
         }
+    }
+
+    private void CacheAtkChildren()
+    {
+        atkChildren.Clear();
+        atkStartPos.Clear();
+        atkStartRot.Clear();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            Atk atk = child.GetComponent<Atk>();
+            if (atk == null) continue;
+
+            atkChildren.Add(atk);
+            atkStartPos.Add(child.localPosition);
+            atkStartRot.Add(child.localRotation);
+        }
+    }
+
+    private void EnsureAtkPool()
+    {
+        for (int i = 0; i < atkChildren.Count; i++)
+        {
+            if (atkChildren[i] == null)
+            {
+                CreateAtkAtIndex(i);
+            }
+        }
+    }
+
+    private Atk CreateAtkAtIndex(int index)
+    {
+        if (enemyParameters.atkPrefab == null || index < 0 || index >= atkStartRot.Count) return null;
+
+        GameObject child = Instantiate(enemyParameters.atkPrefab, transform);
+        child.transform.localPosition = Vector3.zero;
+        child.transform.localRotation = atkStartRot[index];
+
+        Atk atk = child.GetComponent<Atk>();
+        if (index < atkChildren.Count)
+        {
+            atkChildren[index] = atk;
+        }
+        return atk;
     }
 
     public IEnumerator AnimSpeed(Sprite[] targetAnim, float targetSpeed, AnimType targetAnimType, bool isNotLoop = false)

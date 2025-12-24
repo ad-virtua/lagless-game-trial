@@ -5,12 +5,19 @@ using UnityEngine.UI;
 
 public class GameSystemOwner : MonoBehaviour
 {
+    public static GameSystemOwner instance;
+
     [SerializeField]
     private GameObject gameOverUI, clearUI;
     [SerializeField]
     private GameObject[] movieScenes;
 
     public static bool isClear, isGameOver;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void LateUpdate()
     {
@@ -49,5 +56,10 @@ public class GameSystemOwner : MonoBehaviour
                 movieScene.SetActive(false);
             }
         }
+    }
+
+    public bool IsPlayMovie()
+    {
+        return GameObject.FindGameObjectsWithTag("Movie").Length != 0;
     }
 }
