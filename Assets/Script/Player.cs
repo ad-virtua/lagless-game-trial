@@ -388,6 +388,7 @@ public class Player : MonoBehaviour
     {
         transform.position = savePos;
         GetComponent<SpriteRenderer>().enabled = true;
+        Timer.instance.ResetTime();
     }
 
     public void SavePos()

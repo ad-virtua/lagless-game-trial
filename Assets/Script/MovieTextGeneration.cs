@@ -166,4 +166,11 @@ public class MovieTextGeneration : MonoBehaviour
         gameObject.SetActive(false);
         onComplete?.Invoke();
     }
+
+    public void SkipEndProcess()
+    {
+        fadeOut.SetActive(false);
+        gameObject.SetActive(false);
+        onComplete?.Invoke();
+    }
 }
