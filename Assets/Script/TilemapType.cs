@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using static ScenesManagers;
 
 public class TilemapType : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class TilemapType : MonoBehaviour
                         GameObject obj = Instantiate(core, worldPos + new Vector3(startX + 0.5f, 0.5f, 0), Quaternion.identity);
                         obj.transform.parent = tilemap.transform;
                     }
-                    if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage2)
+                    if (ScenesManagers.sceneType == ScenesManagers.SceneType.Stage2 || sceneType == SceneType.Stage3)
                     {
                         GameObject obj = Instantiate(core, worldPos + new Vector3(startX + 0.3f, 0.35f, 0), Quaternion.identity);
                         obj.transform.parent = tilemap.transform;

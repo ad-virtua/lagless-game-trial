@@ -102,7 +102,7 @@ public class StageMoveSystem : MonoBehaviour
                 isPlayerScreenMove = playerScreenRangeChecker.isStop = true;
                 StageManager.instance.stageAreaCount++;
 
-                if (sceneType == SceneType.Stage2)
+                if (sceneType == SceneType.Stage2 || sceneType == SceneType.Stage3)
                 {
                     stagePosCount.y += 9.75f;
                 }
@@ -122,7 +122,7 @@ public class StageMoveSystem : MonoBehaviour
                         specialPosCount.y -= 9f;
                     }
                 }
-                if (sceneType == SceneType.Stage2)
+                if (sceneType == SceneType.Stage2 || sceneType == SceneType.Stage3)
                 {
                     stagePosCount.y -= 9.75f;
                 }
