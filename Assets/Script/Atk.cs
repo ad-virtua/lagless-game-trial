@@ -4,6 +4,12 @@ using UnityEngine;
 public class Atk : MonoBehaviour
 {
     public float launchForce = 10f;
+    private ScreenRangeChecker screenRangeChecker;
+
+    private void Start()
+    {
+        screenRangeChecker = GetComponent<ScreenRangeChecker>();
+    }
 
     public IEnumerator StandbyLerp(Vector3 target, float duration)
     {
@@ -54,5 +60,15 @@ public class Atk : MonoBehaviour
 
         //一定時間後にオブジェクトを削除する
         Destroy(gameObject, 5f);
+    }
+
+    private void Update()
+    {
+        if (!screenRangeChecker.IsInScreen() ||
+            StageMoveSystem.instance.isPlayerScreenMove ||
+             StageMoveSystem.instance.isScreenMove)
+        {
+            Destroy(gameObject);
+        }
     }
 }

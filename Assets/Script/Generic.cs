@@ -24,6 +24,7 @@ public static class Generic
 
             sr.enabled = !sr.enabled;
         }
+        sr.enabled = true;
     }
 
 

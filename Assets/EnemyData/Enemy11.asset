@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e5c1553c29854effb3eec60a1c63137, type: 3}
+  m_Name: Enemy11
+  m_EditorClassIdentifier: 
+  idle: []
+  run:
+  - {fileID: 21300000, guid: 73e5425c858094ae7816ddac40be4086, type: 3}
+  - {fileID: 21300000, guid: 71d3fd0d474634405b59797cb46f80e5, type: 3}
+  - {fileID: 21300000, guid: 1e81a679f47f24110ad47d2f13c3f5bf, type: 3}
+  - {fileID: 21300000, guid: 45fb9975b69ff4277af2f5c61182b405, type: 3}
+  jump: []
+  atk:
+  - {fileID: 21300000, guid: 684015a13b4d844c79a2c81ebe550ae6, type: 3}
+  end: []
+  moveSpeed: 0.75
+  jumpForce: 0
+  idleAnimSpeed: 0
+  runAnimSpeed: 0.2
+  jumpAnimSpeed: 0
+  moveLoopDistance: 0.6
+  rotSpeed: 0
+  followStartRange: 8
+  followStopRange: 12
+  turnOffset: 0.8
+  followOnlyX: 1
+  followBlockMask:
+    serializedVersion: 2
+    m_Bits: 0
+  moveToLeftFirst: 1
+  idelMotion: 0
+  isSpriteLeft: 1
+  isDirectionLock: 0
+  isMoveHigh: 0
+  isCustomAnim: 0
+  hp: 10
+  atkPrefab: {fileID: 3467629045386610358, guid: 11e8abd6ad76b41aabcd921aa8646a49, type: 3}

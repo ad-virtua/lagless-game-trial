@@ -13,6 +13,9 @@ public class EnemyParameters : ScriptableObject
     public float followStartRange = 8f;
     public float followStopRange = 12f;
     public float turnOffset = 0.8f;
+    public float followAtkInterval = 3f;
+    public bool followOnlyX = false;
+    public LayerMask followBlockMask;
     public bool moveToLeftFirst = true;
     public bool idelMotion = false;
     public bool isSpriteLeft = true;

@@ -14,6 +14,7 @@ public class EnemyFollow : MonoBehaviour
 
     private EnemyTypeSelecter enemyTypeSelecter;
     private EnemyParameters enemyParameters;
+    private ScreenRangeChecker screenRangeChecker;
 
     [HideInInspector]
     public AnimType animType;
@@ -33,6 +34,7 @@ public class EnemyFollow : MonoBehaviour
         hp = enemyParameters.hp;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+        screenRangeChecker = GetComponent<ScreenRangeChecker>();
         animType = AnimType.Run;
 
         startX = transform.localPosition.x;
@@ -53,6 +55,8 @@ public class EnemyFollow : MonoBehaviour
             enemyParameters.run,
             enemyParameters.runAnimSpeed,
             AnimType.Run));
+
+        StartCoroutine(ATK(enemyParameters.followAtkInterval));
     }
 
     void Update()
@@ -96,7 +100,22 @@ public class EnemyFollow : MonoBehaviour
     // ======================================================
     void FollowWithOffset()
     {
-        Vector3 toPlayer = (player.position - transform.position).normalized;
+        Vector3 toPlayerRaw = player.position - transform.position;
+
+        if (enemyParameters.followOnlyX)
+        {
+            float dx = toPlayerRaw.x;
+            if (Mathf.Abs(dx) > 0.001f)
+            {
+                float step = Mathf.Sign(dx) * enemyParameters.moveSpeed * Time.deltaTime;
+                if (Mathf.Abs(step) > Mathf.Abs(dx)) step = dx;
+                ApplyFollowMove(new Vector3(step, 0f, 0f));
+            }
+            UpdateSpriteFacing(new Vector3(dx, 0f, 0f));
+            return;
+        }
+
+        Vector3 toPlayer = toPlayerRaw.normalized;
 
         // 横方向の揺れ（蛇行）
         Vector3 side = Vector3.Cross(toPlayer, Vector3.up).normalized;
@@ -105,12 +124,35 @@ public class EnemyFollow : MonoBehaviour
         Vector3 offsetDir = (toPlayer + side * dir * enemyParameters.turnOffset).normalized;
 
         // 移動のみ（回転しない）
-        transform.position += offsetDir * enemyParameters.moveSpeed * Time.deltaTime;
+        ApplyFollowMove(offsetDir * enemyParameters.moveSpeed * Time.deltaTime);
 
         // sprite の向きだけ調整
-        if (offsetDir.x > 0)
+        UpdateSpriteFacing(offsetDir);
+    }
+
+    void ApplyFollowMove(Vector3 delta)
+    {
+        if (delta == Vector3.zero) return;
+
+        if (enemyParameters.followBlockMask.value != 0)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, delta.normalized, delta.magnitude, enemyParameters.followBlockMask);
+            if (hit.collider != null && !hit.collider.isTrigger)
+            {
+                float safeDistance = Mathf.Max(0f, hit.distance - 0.01f);
+                if (safeDistance <= 0f) return;
+                delta = delta.normalized * safeDistance;
+            }
+        }
+
+        transform.position += delta;
+    }
+
+    void UpdateSpriteFacing(Vector3 dir)
+    {
+        if (dir.x > 0)
             transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
-        else
+        else if (dir.x < 0)
             transform.localScale = startScale;
     }
 
@@ -203,5 +245,34 @@ public class EnemyFollow : MonoBehaviour
 
             if (isNotLoop) yield break;
         }
+    }
+
+    IEnumerator ATK(float atkIntervalTime)
+    {
+        if (enemyParameters.atkPrefab == null) yield break;
+
+        while (true)
+        {
+            yield return new WaitUntil(() => screenRangeChecker.IsInScreen());
+
+            yield return new WaitForSeconds(atkIntervalTime);
+            if (GameSystemOwner.isClear) yield break;
+
+            if (screenRangeChecker.IsInScreen() && enemyParameters.atkPrefab != null) SpawnAtkPrefab();
+        }
+    }
+
+    void SpawnAtkPrefab()
+    {
+        // デフォルトは上向き。左右の向きに合わせて回転させる。
+        bool isFacingRight = Mathf.Sign(transform.localScale.x) != Mathf.Sign(startScale.x);
+        float zRot = isFacingRight ? -90f : 90f;
+
+        var atkPrefab = Instantiate(
+            enemyParameters.atkPrefab,
+            transform.position,
+            Quaternion.Euler(0f, 0f, zRot));
+        atkPrefab.GetComponent<Atk>().StartAtk();
+        atkPrefab.GetComponent<Atk>().StandbyLerp(transform.localPosition, 1f);
     }
 }
