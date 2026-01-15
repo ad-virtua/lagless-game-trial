@@ -68,12 +68,10 @@ public class Player : MonoBehaviour
 
         if (StageMoveSystem.instance &&
             (StageMoveSystem.instance.isPlayerScreenMove ||
-             StageMoveSystem.instance.isScreenMove ||
-             isPortal))
+             StageMoveSystem.instance.isScreenMove))
         {
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
-            if (isPortal) GetComponent<BoxCollider2D>().isTrigger = true;
         }
         else
         {
@@ -130,7 +128,7 @@ public class Player : MonoBehaviour
         }
 
         // ジャンプ（スペースキー）
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && GetComponent<PlayerDistanceChecker2D>().isDownClose)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             if (!jumpInput) JumpAnim();
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -243,6 +241,14 @@ public class Player : MonoBehaviour
             StartCoroutine(StealthTime(1f));
             StartCoroutine(Generic.DamageFlash(GetComponent<SpriteRenderer>(), 0.05f, 20));
             Destroy(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Portal" && isPortal)
+        {
+
         }
     }
 
