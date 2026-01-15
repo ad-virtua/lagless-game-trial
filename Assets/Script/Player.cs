@@ -224,7 +224,6 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("GameOver"))
         {
             GameSystemOwner.isGameOver = true;
-            //Destroy(gameObject);
             GetComponent<SpriteRenderer>().enabled = false;
         }
     }
