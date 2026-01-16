@@ -137,8 +137,8 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            if (sceneType == SceneType.Stage1) return;
-            SpecialGauge.instance.Skill();
+            if (sceneType == SceneType.Stage2) SpecialGauge.instance.Skill();
+            if (sceneType == SceneType.Stage3) LuteinBarrierGauge.instance.Skill();
         }
     }
 
@@ -241,14 +241,6 @@ public class Player : MonoBehaviour
             StartCoroutine(StealthTime(1f));
             StartCoroutine(Generic.DamageFlash(GetComponent<SpriteRenderer>(), 0.05f, 20));
             Destroy(collision.gameObject);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Portal" && isPortal)
-        {
-
         }
     }
 
