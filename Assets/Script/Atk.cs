@@ -64,6 +64,8 @@ public class Atk : MonoBehaviour
 
     private void Update()
     {
+        if (!screenRangeChecker) return;
+
         if (!screenRangeChecker.IsInScreen() ||
             StageMoveSystem.instance.isPlayerScreenMove ||
              StageMoveSystem.instance.isScreenMove)

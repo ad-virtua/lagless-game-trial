@@ -2,13 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScenesManagers : MonoBehaviour
 {
     public static ScenesManagers instance;
+    public bool isTitleScene;
 
     [SerializeField]
     private SceneType startSceneType;
+
+    [SerializeField]
+    private GameObject gameSelectButtonSaveDataNone, gameSelectButtonSaveDataActive;
 
     public enum SceneType
     {
@@ -24,12 +29,33 @@ public class ScenesManagers : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        if (sceneType == SceneType.Title) sceneType = startSceneType;
+        if (sceneType == SceneType.Title)
+        {
+            sceneType = StageProgressSave.GetStartStage(startSceneType);
+            Debug.Log(sceneType);
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        StageManager.instance.ChangeStage((int)sceneType);
+        if (isTitleScene)
+        {
+            if (sceneType == SceneType.Title) gameSelectButtonSaveDataNone.SetActive(true);
+            else gameSelectButtonSaveDataActive.SetActive(true);
+            return;
+        }
+
+        if (sceneType != SceneType.Title) StageManager.instance.ChangeStage((int)sceneType);
+    }
+
+    public void ResetProgress()
+    {
+        StageProgressSave.ResetProgress();
+    }
+
+    public void OnClickGame()
+    {
+        SceneManager.LoadScene("Game");
     }
 }
