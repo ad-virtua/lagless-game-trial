@@ -29,11 +29,7 @@ public class ScenesManagers : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        if (sceneType == SceneType.Title)
-        {
-            sceneType = StageProgressSave.GetStartStage(startSceneType);
-            Debug.Log(sceneType);
-        }
+        sceneType = StageProgressSave.GetStartStage(startSceneType);
     }
 
     // Start is called before the first frame update

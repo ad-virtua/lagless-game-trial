@@ -20,7 +20,7 @@ public class Portal : MonoBehaviour
     {
         if (target == null) yield break;
 
-        LuteinBarrierGauge.instance.AllResetParameter();
+        if(ScenesManagers.sceneType == ScenesManagers.SceneType.Stage3) LuteinBarrierGauge.instance.AllResetParameter();
 
         // 移動が終わるまでループ
         while (Vector3.Distance(target.position, goalPortal.position) > 0.01f)
