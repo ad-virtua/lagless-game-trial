@@ -32,8 +32,10 @@ public class DebugSystem : MonoBehaviour
 
     public void ResetScene(int stageNum)
     {
+        ScenesManagers.sceneType = (ScenesManagers.SceneType)stageNum;
+        StageProgressSave.SaveClearedStage(ScenesManagers.sceneType);
+
         var scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
-        ScenesManagers.sceneType = (ScenesManagers.SceneType)stageNum;
     }
 }

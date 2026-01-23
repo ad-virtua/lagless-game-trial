@@ -38,11 +38,6 @@ public static class StageProgressSave
         }
 
         var nextStage = Mathf.Clamp((int)clearedStage, MinStage, MaxStage);
-        var current = PlayerPrefs.GetInt(StageKey, MinStage);
-        if (nextStage <= current)
-        {
-            return;
-        }
 
         PlayerPrefs.SetInt(StageKey, nextStage);
         PlayerPrefs.Save();
