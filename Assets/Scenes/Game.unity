@@ -1991,7 +1991,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -6789,7 +6789,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.92, y: 10.581333}
+    oldSize: {x: 9.920625, y: 10.56}
     newSize: {x: 9.92, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -7334,7 +7334,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.12, y: 8.22}
+    oldSize: {x: 6.1200004, y: 8.224253}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -21059,7 +21059,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.12, y: 8.22}
+    oldSize: {x: 6.1200004, y: 8.224253}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -34398,7 +34398,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.12, y: 8.22}
+    oldSize: {x: 6.1200004, y: 8.224253}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -48280,7 +48280,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.92, y: 10.581333}
+    oldSize: {x: 9.920625, y: 10.56}
     newSize: {x: 9.92, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -58273,7 +58273,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.92, y: 10.581333}
+    oldSize: {x: 9.920625, y: 10.56}
     newSize: {x: 9.92, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -68281,7 +68281,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -70013,7 +70013,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -97495,7 +97495,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -98252,7 +98252,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -110516,7 +110516,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -117173,413 +117173,7 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 1188779879}
-    m_ColliderPaths:
-    - - X: 137475008
-        Y: 301725056
-      - X: 661725056
-        Y: 301725056
-      - X: 661725056
-        Y: 229905008
-      - X: 661815040
-        Y: 229725024
-      - X: 691875008
-        Y: 229725024
-      - X: 691875008
-        Y: 344925056
-      - X: 699075008
-        Y: 344925056
-      - X: 699075008
-        Y: 352125024
-      - X: 706275008
-        Y: 352125024
-      - X: 706275008
-        Y: 359325024
-      - X: 719325056
-        Y: 359325024
-      - X: 719325056
-        Y: 344925056
-      - X: 727875008
-        Y: 344925056
-      - X: 727875008
-        Y: 352125024
-      - X: 735075072
-        Y: 352125024
-      - X: 735075072
-        Y: 359325024
-      - X: 742275008
-        Y: 359325024
-      - X: 742275008
-        Y: 388125024
-      - X: 756675008
-        Y: 388125024
-      - X: 756675008
-        Y: 439875040
-      - X: 740925056
-        Y: 439875040
-      - X: 740925056
-        Y: 432675072
-      - X: 726525120
-        Y: 432675072
-      - X: 726525120
-        Y: 425475040
-      - X: 691875008
-        Y: 425475040
-      - X: 691875008
-        Y: 447075040
-      - X: 647325056
-        Y: 447075040
-      - X: 647325056
-        Y: 438525024
-      - X: 661725056
-        Y: 438525024
-      - X: 661725056
-        Y: 425475040
-      - X: 634275072
-        Y: 425475040
-      - X: 634275072
-        Y: 461475072
-      - X: 627075072
-        Y: 461475072
-      - X: 627075072
-        Y: 475875040
-      - X: 618525056
-        Y: 475875040
-      - X: 618525056
-        Y: 468675040
-      - X: 524925056
-        Y: 468675040
-      - X: 524925056
-        Y: 460124992
-      - X: 539325056
-        Y: 460124992
-      - X: 539325056
-        Y: 445725024
-      - X: 618525056
-        Y: 445725024
-      - X: 618525056
-        Y: 375075040
-      - X: 409725024
-        Y: 375075040
-      - X: 409725024
-        Y: 367875072
-      - X: 388125024
-        Y: 367875072
-      - X: 388125024
-        Y: 360675040
-      - X: 373725024
-        Y: 360675040
-      - X: 373725024
-        Y: 352125024
-      - X: 632925056
-        Y: 352125024
-      - X: 632925056
-        Y: 331875040
-      - X: 151875008
-        Y: 331875040
-      - X: 151875008
-        Y: 339075040
-      - X: 137475008
-        Y: 339075040
-      - X: 137475008
-        Y: 346275072
-      - X: 92925008
-        Y: 346275072
-      - X: 92925008
-        Y: 339075040
-      - X: 78525000
-        Y: 339075040
-      - X: 78525000
-        Y: 331875040
-      - X: 674999
-        Y: 331875040
-      - X: 674999
-        Y: 339075040
-      - X: -6525000
-        Y: 339075040
-      - X: -6525000
-        Y: 346275072
-      - X: -13725001
-        Y: 346275072
-      - X: -13725001
-        Y: 360675040
-      - X: -29475000
-        Y: 360675040
-      - X: -29475000
-        Y: 301725056
-      - X: 121725008
-        Y: 301725056
-      - X: 121725008
-        Y: 231075024
-      - X: 51075000
-        Y: 231075024
-      - X: 51075000
-        Y: 238275008
-      - X: 36675004
-        Y: 238275008
-      - X: 36675004
-        Y: 245475008
-      - X: 22275000
-        Y: 245475008
-      - X: 22275000
-        Y: 252675024
-      - X: 7875000
-        Y: 252675024
-      - X: 7875000
-        Y: 259875008
-      - X: -6525000
-        Y: 259875008
-      - X: -6525000
-        Y: 267075024
-      - X: -20925000
-        Y: 267075024
-      - X: -20925000
-        Y: 274275008
-      - X: -42524996
-        Y: 274275008
-      - X: -42524996
-        Y: 395325024
-      - X: 78525000
-        Y: 395325024
-      - X: 78525000
-        Y: 388125024
-      - X: 92925008
-        Y: 388125024
-      - X: 92925008
-        Y: 380925024
-      - X: 136125008
-        Y: 380925024
-      - X: 136125008
-        Y: 373725024
-      - X: 150525024
-        Y: 373725024
-      - X: 150525024
-        Y: 366524992
-      - X: 324675072
-        Y: 366524992
-      - X: 324675072
-        Y: 380925024
-      - X: 331875040
-        Y: 380925024
-      - X: 331875040
-        Y: 388125024
-      - X: 339075040
-        Y: 388125024
-      - X: 339075040
-        Y: 395325024
-      - X: 605475072
-        Y: 395325024
-      - X: 605475072
-        Y: 425475040
-      - X: 576675072
-        Y: 425475040
-      - X: 576675072
-        Y: 432675072
-      - X: 568125056
-        Y: 432675072
-      - X: 568125056
-        Y: 425475040
-      - X: 497475040
-        Y: 425475040
-      - X: 497475040
-        Y: 438525024
-      - X: 511875040
-        Y: 438525024
-      - X: 511875040
-        Y: 447075040
-      - X: 497475040
-        Y: 447075040
-      - X: 497475040
-        Y: 496125024
-      - X: 539325056
-        Y: 496125024
-      - X: 539325056
-        Y: 488925024
-      - X: 583875072
-        Y: 488925024
-      - X: 583875072
-        Y: 496125024
-      - X: 647325056
-        Y: 496125024
-      - X: 647325056
-        Y: 488925024
-      - X: 654525056
-        Y: 488925024
-      - X: 654525056
-        Y: 481725056
-      - X: 661725056
-        Y: 481725056
-      - X: 661725056
-        Y: 467325024
-      - X: 691875008
-        Y: 467325024
-      - X: 691875008
-        Y: 496125024
-      - X: 827325056
-        Y: 496125024
-      - X: 827325056
-        Y: 425475040
-      - X: 807075072
-        Y: 425475040
-      - X: 807075072
-        Y: 432675072
-      - X: 792675072
-        Y: 432675072
-      - X: 792675072
-        Y: 439875040
-      - X: 776925056
-        Y: 439875040
-      - X: 776925056
-        Y: 388125024
-      - X: 791325056
-        Y: 388125024
-      - X: 791325056
-        Y: 344925056
-      - X: 799875008
-        Y: 344925056
-      - X: 799875008
-        Y: 352125024
-      - X: 807075072
-        Y: 352125024
-      - X: 807075072
-        Y: 366524992
-      - X: 820125120
-        Y: 366524992
-      - X: 820125120
-        Y: 324675072
-      - X: 712125120
-        Y: 324675072
-      - X: 712125120
-        Y: 294705024
-      - X: 712215040
-        Y: 294525024
-      - X: 1561725056
-        Y: 294525024
-      - X: 1561725056
-        Y: 229905008
-      - X: 1561815040
-        Y: 229725024
-      - X: 1584674944
-        Y: 229725024
-      - X: 1584674944
-        Y: 310005024
-      - X: 1584404864
-        Y: 310275040
-      - X: 864675072
-        Y: 310275040
-      - X: 864675072
-        Y: 504675072
-      - X: 481725056
-        Y: 504675072
-      - X: 481725056
-        Y: 418275072
-      - X: -58275004
-        Y: 418275072
-      - X: -58275004
-        Y: 92925008
-      - X: -7875000
-        Y: 92925008
-      - X: -7875000
-        Y: 85725000
-      - X: 15075001
-        Y: 85725000
-      - X: 15075001
-        Y: 92925008
-      - X: 29475002
-        Y: 92925008
-      - X: 29475002
-        Y: 100125000
-      - X: 36675004
-        Y: 100125000
-      - X: 36675004
-        Y: 107325000
-      - X: 56925000
-        Y: 107325000
-      - X: 56925000
-        Y: 100125000
-      - X: 108674992
-        Y: 100125000
-      - X: 108674992
-        Y: 137475008
-      - X: 87074992
-        Y: 137475008
-      - X: 87074992
-        Y: 144674992
-      - X: 78525000
-        Y: 144674992
-      - X: 78525000
-        Y: 137475008
-      - X: 65475008
-        Y: 137475008
-      - X: 65475008
-        Y: 144674992
-      - X: 51075000
-        Y: 144674992
-      - X: 51075000
-        Y: 151875008
-      - X: -42524996
-        Y: 151875008
-      - X: -42524996
-        Y: 193725008
-      - X: -13725001
-        Y: 193725008
-      - X: -13725001
-        Y: 200925008
-      - X: 121725008
-        Y: 200925008
-      - X: 121725008
-        Y: 187875008
-      - X: 42525004
-        Y: 187875008
-      - X: 42525004
-        Y: 180675008
-      - X: 28125002
-        Y: 180675008
-      - X: 28125002
-        Y: 172125008
-      - X: 58275004
-        Y: 172125008
-      - X: 58275004
-        Y: 179325008
-      - X: 85725000
-        Y: 179325008
-      - X: 85725000
-        Y: 172125008
-      - X: 92925008
-        Y: 172125008
-      - X: 92925008
-        Y: 164925008
-      - X: 121725008
-        Y: 164925008
-      - X: 121725008
-        Y: 72675008
-      - X: 100125000
-        Y: 72675008
-      - X: 100125000
-        Y: 65475008
-      - X: 85725000
-        Y: 65475008
-      - X: 85725000
-        Y: 58275004
-      - X: 71325000
-        Y: 58275004
-      - X: 71325000
-        Y: 51075000
-      - X: 56925000
-        Y: 51075000
-      - X: 56925000
-        Y: 43875004
-      - X: 42525004
-        Y: 43875004
-      - X: 42525004
-        Y: 36675004
-      - X: -58275004
-        Y: 36675004
-      - X: -58275004
-        Y: 6525000
-      - X: 137475008
-        Y: 6525000
+  m_ColliderPaths: []
   m_CompositePaths:
     m_Paths:
     - - {x: 13.747501, y: 30.172506}
@@ -145580,7 +145174,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -153481,7 +153075,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.12, y: 8.22}
+    oldSize: {x: 6.1200004, y: 8.224253}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -154190,7 +153784,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.92, y: 10.581333}
+    oldSize: {x: 9.920625, y: 10.56}
     newSize: {x: 9.92, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -202172,7 +201766,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -211064,7 +210658,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.92, y: 10.581333}
+    oldSize: {x: 9.920625, y: 10.56}
     newSize: {x: 9.92, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -211515,7 +211109,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.92, y: 10.581333}
+    oldSize: {x: 9.920625, y: 10.56}
     newSize: {x: 9.92, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -233192,7 +232786,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -233406,7 +233000,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -233483,7 +233077,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1590789377
 Transform:
   m_ObjectHideFlags: 0
@@ -245807,7 +245401,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -262463,7 +262057,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.12, y: 8.22}
+    oldSize: {x: 6.1200004, y: 8.224253}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -262787,7 +262381,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.92, y: 10.581333}
+    oldSize: {x: 9.920625, y: 10.56}
     newSize: {x: 9.92, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -263569,7 +263163,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -264610,7 +264204,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.92, y: 10.581333}
+    oldSize: {x: 9.920625, y: 10.56}
     newSize: {x: 9.92, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -266334,7 +265928,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.12, y: 8.22}
+    oldSize: {x: 6.1200004, y: 8.224253}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -279422,7 +279016,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.12, y: 8.22}
+    oldSize: {x: 6.1200004, y: 8.224253}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -295814,7 +295408,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.01, y: 4.87}
+    oldSize: {x: 7.0099998, y: 4.8741403}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -297298,7 +296892,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.12, y: 8.22}
+    oldSize: {x: 6.1200004, y: 8.224253}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -297363,7 +296957,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.92, y: 10.581333}
+    oldSize: {x: 9.920625, y: 10.56}
     newSize: {x: 9.92, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
