@@ -330,7 +330,8 @@ MonoBehaviour:
   shotPoint: {fileID: 772027189}
   shotPrefab: {fileID: 2027039256025354579, guid: a4d4df1759da148f8a1e533e611cc437, type: 3}
   shotInterval: 0.5
-  hp: 10
+  hpUI: {fileID: 1071866739}
+  hp: 5
   joystick: {fileID: 2036381030}
   isGrounded: 0
   knockbackForce: 10

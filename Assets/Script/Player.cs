@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ScenesManagers;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Player : MonoBehaviour
 {
@@ -16,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject shotPoint;
     [SerializeField] private GameObject shotPrefab;
     [SerializeField] private float shotInterval;
+    [SerializeField] private GameObject hpUI;
     [SerializeField] private int hp;
     [SerializeField] private Joystick joystick;
 
@@ -207,6 +206,7 @@ public class Player : MonoBehaviour
             ApplyKnockback(collision.transform.position);
             StartCoroutine(StealthTime(1f));
             StartCoroutine(Generic.DamageFlash(GetComponent<SpriteRenderer>(), 0.05f, 20));
+            DamageHP(1);
         }
 
         if (collision.gameObject.CompareTag("Water"))
@@ -367,8 +367,17 @@ public class Player : MonoBehaviour
 
     public void DamageHP(int damage)
     {
+        int hpCount = hp;
+        if (damage > hp) damage = hp;
+
+        for (int i = 0; i < damage; i++)
+        {
+            hpUI.transform.GetChild(hpCount - 1).gameObject.SetActive(false);
+            hpCount--;
+        }
         hp -= damage;
-        if (hp < 0)
+
+        if (hp <= 0)
         {
             hp = 0;
             GameSystemOwner.isGameOver = true;

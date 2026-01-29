@@ -37,6 +37,7 @@ public class GameSystemOwner : MonoBehaviour
         if (isGameOver && !gameOverUI.activeSelf)
         {
             gameOverUI.SetActive(true);
+
         }
     }
 
