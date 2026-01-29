@@ -22,6 +22,8 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
+        if (ScenesManagers.instance.isPause) return;
+
         if (GameSystemOwner.isClear)
         {
             switch (ScenesManagers.sceneType)

@@ -30,6 +30,8 @@ public class ScreenRangeChecker : MonoBehaviour
 
     void Update()
     {
+        if (ScenesManagers.instance.isPause) return;
+
         if (isStop)
         {
             direction = CameraWasDirection.None;

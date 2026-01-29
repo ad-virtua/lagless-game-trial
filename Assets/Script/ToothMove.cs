@@ -21,6 +21,8 @@ public class ToothMove : MonoBehaviour
 
     void Update()
     {
+        if (GameSystemOwner.isGameOver || ScenesManagers.instance.isPause) return;
+
         // 1. 0～1の間を往復する値を計算します
         // Time.time * speed の値が 0 -> 1 になるまで t は 0 -> 1 (片道)
         // Time.time * speed の値が 1 -> 2 になるまで t は 1 -> 0 (復路)

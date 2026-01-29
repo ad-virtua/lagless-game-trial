@@ -22,6 +22,8 @@ public class EnemyShutter : MonoBehaviour
 
     private void Update()
     {
+        if (GameSystemOwner.isGameOver || ScenesManagers.instance.isPause) return;
+
         if (StageMoveSystem.instance.isScreenMove)
         {
             ResetPos();

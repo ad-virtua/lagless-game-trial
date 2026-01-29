@@ -61,6 +61,8 @@ public class EnemyFollow : MonoBehaviour
 
     void Update()
     {
+        if (GameSystemOwner.isGameOver || ScenesManagers.instance.isPause) return;
+
         if (StageMoveSystem.instance.isScreenMove) return;
 
         float distance = Vector3.Distance(transform.position, player.position);
@@ -253,10 +255,22 @@ public class EnemyFollow : MonoBehaviour
 
         while (true)
         {
+            // ■ 画面移動中は待機する
+            while (StageMoveSystem.instance.isScreenMove || ScenesManagers.instance.isPause)
+            {
+                yield return null;
+            }
+
             yield return new WaitUntil(() => screenRangeChecker.IsInScreen());
 
             yield return new WaitForSeconds(atkIntervalTime);
             if (GameSystemOwner.isClear) yield break;
+
+            // ■ 画面移動中は待機する
+            while (StageMoveSystem.instance.isScreenMove || ScenesManagers.instance.isPause)
+            {
+                yield return null;
+            }
 
             if (screenRangeChecker.IsInScreen() && enemyParameters.atkPrefab != null) SpawnAtkPrefab();
         }

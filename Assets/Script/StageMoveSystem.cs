@@ -40,6 +40,8 @@ public class StageMoveSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ScenesManagers.instance.isPause) return;
+
         if (playerScreenRangeChecker && !isPlayerScreenMove && (marginDistanceX == Vector2.zero || marginDistanceY == Vector2.zero))
         {
             // ここで取得と同時にリセット

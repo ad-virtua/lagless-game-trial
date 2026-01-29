@@ -26,6 +26,7 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
+        if (GameSystemOwner.isGameOver || ScenesManagers.instance.isPause) return;
         if (GameSystemOwner.isClear || GameSystemOwner.instance.IsPlayMovie()) return;
         if (StageMoveSystem.instance && StageMoveSystem.instance.isScreenMove) return;
 

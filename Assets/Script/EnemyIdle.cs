@@ -30,6 +30,8 @@ public class EnemyIdle : MonoBehaviour
 
     private void Update()
     {
+        if (GameSystemOwner.isGameOver || ScenesManagers.instance.isPause) return;
+
         if (enemyParameters.idelMotion)
         {
             // 0〜1を往復する値

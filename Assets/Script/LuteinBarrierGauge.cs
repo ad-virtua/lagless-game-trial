@@ -54,7 +54,7 @@ public class LuteinBarrierGauge : MonoBehaviour
         while (elapsed < duration)
         {
             // ■ 画面移動中は待機する（スライダー更新しない）
-            while (StageMoveSystem.instance.isScreenMove)
+            while (StageMoveSystem.instance.isScreenMove || ScenesManagers.instance.isPause)
             {
                 yield return null;
             }

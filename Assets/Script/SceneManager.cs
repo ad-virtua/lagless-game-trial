@@ -8,6 +8,41 @@ public class ScenesManagers : MonoBehaviour
 {
     public static ScenesManagers instance;
     public bool isTitleScene;
+    public bool isPause;
+    public static bool IsPaused => instance != null && instance.isPause;
+
+    public static IEnumerator WaitWhilePaused()
+    {
+        while (IsPaused)
+        {
+            yield return null;
+        }
+    }
+
+    public static IEnumerator WaitForSecondsPause(float seconds)
+    {
+        if (seconds <= 0f)
+        {
+            yield return WaitWhilePaused();
+            yield return null;
+            yield break;
+        }
+
+        float elapsed = 0f;
+        while (elapsed < seconds)
+        {
+            if (IsPaused)
+            {
+                yield return null;
+                continue;
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        yield return WaitWhilePaused();
+    }
 
     [SerializeField]
     private SceneType startSceneType;
@@ -53,5 +88,15 @@ public class ScenesManagers : MonoBehaviour
     public void OnClickGame()
     {
         SceneManager.LoadScene("Game");
+    }
+
+    public void OnClickTitle()
+    {
+        SceneManager.LoadScene("Title");
+    }
+
+    public void SetPause(bool isEnable)
+    {
+        isPause = isEnable;
     }
 }

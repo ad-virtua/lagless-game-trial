@@ -60,6 +60,8 @@ public class EnemyMoveLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameSystemOwner.isGameOver || ScenesManagers.instance.isPause) return;
+
         if (StageMoveSystem.instance.isScreenMove || GameSystemOwner.isClear || GameSystemOwner.instance.IsPlayMovie()) return;
 
         if (screenRangeChecker && !isPlayerDistanceRange)
@@ -198,6 +200,12 @@ public class EnemyMoveLoop : MonoBehaviour
             for (int i = 0; i < pos.Count; i++)
             {
                 yield return StartCoroutine(WaitWhileMovie());
+
+                // ■ 画面移動中は待機する
+                while (StageMoveSystem.instance.isScreenMove || ScenesManagers.instance.isPause)
+                {
+                    yield return null;
+                }
 
                 GameObject child = Instantiate(enemyParameters.atkPrefab, transform);
                 child.transform.localPosition = Vector3.zero;

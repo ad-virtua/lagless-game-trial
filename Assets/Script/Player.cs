@@ -63,6 +63,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameSystemOwner.isGameOver || ScenesManagers.instance.isPause) return;
+
         if (GameSystemOwner.isClear || GameSystemOwner.instance.IsPlayMovie()) return;
 
         if (StageMoveSystem.instance &&
@@ -396,6 +398,12 @@ public class Player : MonoBehaviour
         transform.position = savePos;
         GetComponent<SpriteRenderer>().enabled = true;
         Timer.instance.ResetTime();
+
+        for (int i = 0; i < hpUI.transform.childCount; i++)
+        {
+            hpUI.transform.GetChild(i).gameObject.SetActive(true);
+        }
+        hp = hpUI.transform.childCount;
     }
 
     public void SavePos()
