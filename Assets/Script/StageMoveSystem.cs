@@ -106,7 +106,8 @@ public class StageMoveSystem : MonoBehaviour
 
                 if (sceneType == SceneType.Stage2 || sceneType == SceneType.Stage3)
                 {
-                    stagePosCount.y += 9.75f;
+                    if (player.GetComponent<Player>().isShortCut) stagePosCount.y += 20.95f;
+                    else stagePosCount.y += 9.75f;
                 }
                 StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + specialPosCount.x, stagePosCount.y + specialPosCount.y, transform.position.z)));
             }
@@ -126,7 +127,8 @@ public class StageMoveSystem : MonoBehaviour
                 }
                 if (sceneType == SceneType.Stage2 || sceneType == SceneType.Stage3)
                 {
-                    stagePosCount.y -= 9.75f;
+                    if (player.GetComponent<Player>().isShortCut) stagePosCount.y -= 20.95f;
+                    else stagePosCount.y -= 9.75f;
                 }
                 StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + specialPosCount.x, stagePosCount.y + specialPosCount.y, transform.position.z)));
             }
@@ -195,6 +197,7 @@ public class StageMoveSystem : MonoBehaviour
         marginDistanceX = new Vector2(player.transform.position.x, player.transform.position.z);
         marginDistanceY = new Vector2(player.transform.position.y, player.transform.position.z);
         Player.instance.SavePos();
+        player.GetComponent<Player>().isShortCut = false;
     }
 
     IEnumerator StageChangeBigupBlackout(GameObject beforeObj, GameObject afterObj)

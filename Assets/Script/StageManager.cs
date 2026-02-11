@@ -12,7 +12,6 @@ public class StageManager : MonoBehaviour
 
     public GameObject[] stage1Parts, stage2Parts, stage3Parts;
 
-    [HideInInspector]
     public int stageAreaCount;
 
     private void Awake()

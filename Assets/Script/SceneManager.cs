@@ -10,6 +10,7 @@ public class ScenesManagers : MonoBehaviour
     public bool isTitleScene;
     public bool isPause;
     public static bool IsPaused => instance != null && instance.isPause;
+    private static bool showStageSelectOnGameStart;
 
     public static IEnumerator WaitWhilePaused()
     {
@@ -77,6 +78,17 @@ public class ScenesManagers : MonoBehaviour
             return;
         }
 
+        if (showStageSelectOnGameStart)
+        {
+            showStageSelectOnGameStart = false;
+            if (StageManager.instance != null && StageManager.instance.map != null)
+            {
+                StageManager.instance.map.SetActive(true);
+                SetPause(true);
+                return;
+            }
+        }
+
         if (sceneType != SceneType.Title) StageManager.instance.ChangeStage((int)sceneType);
     }
 
@@ -87,6 +99,7 @@ public class ScenesManagers : MonoBehaviour
 
     public void OnClickGame()
     {
+        showStageSelectOnGameStart = StageProgressSave.TryGetSavedStage(out _);
         SceneManager.LoadScene("Game");
     }
 

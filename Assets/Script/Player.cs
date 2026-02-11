@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     private Vector3 startPosition;
     private Quaternion startRot;
     private bool isDamage;
-    public bool isPortal;
+    public bool isPortal, isShortCut;
 
     enum AnimType
     {
@@ -190,6 +190,8 @@ public class Player : MonoBehaviour
     // 地面との接触判定
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (GameSystemOwner.isGameOver) return;
+
         if (collision.gameObject.CompareTag("Ground"))
         {
             foreach (ContactPoint2D contact in collision.contacts)
@@ -230,15 +232,19 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (GameSystemOwner.isGameOver) return;
+
         if (collision.tag == "Portal" && !isPortal)
         {
             isPortal = true;
             GetComponent<SpriteRenderer>().enabled = false;
+            if (collision.GetComponent<Portal>().isShortCut) isShortCut = true;
             StartCoroutine(collision.GetComponent<Portal>().MoveToPosition());
         }
 
         if (collision.transform.tag == "Atk" && gameObject.layer == 6)
         {
+            DamageHP(1);
             ApplyKnockback(collision.transform.position);
             StartCoroutine(StealthTime(1f));
             StartCoroutine(Generic.DamageFlash(GetComponent<SpriteRenderer>(), 0.05f, 20));
