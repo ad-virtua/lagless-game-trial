@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ScenesManagers;
+using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
 {
@@ -238,8 +239,12 @@ public class Player : MonoBehaviour
         {
             isPortal = true;
             GetComponent<SpriteRenderer>().enabled = false;
+            GetComponent<BoxCollider2D>().isTrigger = true;
             if (collision.GetComponent<Portal>().isShortCut) isShortCut = true;
-            StartCoroutine(collision.GetComponent<Portal>().MoveToPosition());
+            if (sceneType == SceneType.Stage3) LuteinBarrierGauge.instance.AllResetParameter();
+
+            // 最終位置を正確に
+            transform.position = collision.GetComponent<Portal>().GetGoalPortal().position;
         }
 
         if (collision.transform.tag == "Atk" && gameObject.layer == 6)

@@ -81,6 +81,5 @@ public class LuteinBarrierGauge : MonoBehaviour
     {
         isPlayBarrier = false;
         luteinBarrierCircle.SetActive(false);
-        player.layer = 6;
     }
 }

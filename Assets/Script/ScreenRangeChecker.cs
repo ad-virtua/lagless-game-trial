@@ -52,9 +52,9 @@ public class ScreenRangeChecker : MonoBehaviour
         }
         else if (!wasInScreen && isInScreen)
         {
+            direction = CameraWasDirection.None;
             Debug.Log($"{gameObject.name} が画面内に戻りました！");
         }
-
         wasInScreen = isInScreen;
     }
 

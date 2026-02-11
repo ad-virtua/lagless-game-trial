@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using static ScenesManagers;
 using static ScreenRangeChecker;
+using static UnityEngine.GraphicsBuffer;
 
 public class StageMoveSystem : MonoBehaviour
 {
@@ -106,7 +107,11 @@ public class StageMoveSystem : MonoBehaviour
 
                 if (sceneType == SceneType.Stage2 || sceneType == SceneType.Stage3)
                 {
-                    if (player.GetComponent<Player>().isShortCut) stagePosCount.y += 20.95f;
+                    if (player.GetComponent<Player>().isShortCut)
+                    {
+                        stagePosCount.y += 20.95f;
+                        StageManager.instance.stageAreaCount++;
+                    }
                     else stagePosCount.y += 9.75f;
                 }
                 StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + specialPosCount.x, stagePosCount.y + specialPosCount.y, transform.position.z)));
@@ -127,7 +132,11 @@ public class StageMoveSystem : MonoBehaviour
                 }
                 if (sceneType == SceneType.Stage2 || sceneType == SceneType.Stage3)
                 {
-                    if (player.GetComponent<Player>().isShortCut) stagePosCount.y -= 20.95f;
+                    if (player.GetComponent<Player>().isShortCut)
+                    {
+                        stagePosCount.y -= 20.95f;
+                        StageManager.instance.stageAreaCount--;
+                    }
                     else stagePosCount.y -= 9.75f;
                 }
                 StartCoroutine(ScreenMove(new Vector3(stagePosCount.x + specialPosCount.x, stagePosCount.y + specialPosCount.y, transform.position.z)));
@@ -173,6 +182,7 @@ public class StageMoveSystem : MonoBehaviour
 
     IEnumerator ScreenMove(Vector3 targetPos)
     {
+        gameObject.layer = 12;
         isScreenMove = true;
         while (Vector3.Distance(transform.position, targetPos) > 0.01f)
         {
@@ -198,7 +208,17 @@ public class StageMoveSystem : MonoBehaviour
         marginDistanceY = new Vector2(player.transform.position.y, player.transform.position.z);
         Player.instance.SavePos();
         player.GetComponent<Player>().isShortCut = false;
+        MoveEnd();
     }
+
+    public void MoveEnd()
+    {
+        gameObject.layer = 6;
+        player.GetComponent<Player>().isPortal = false;
+        player.GetComponent<BoxCollider2D>().isTrigger = false;
+        player.GetComponent<SpriteRenderer>().enabled = true;
+    }
+
 
     IEnumerator StageChangeBigupBlackout(GameObject beforeObj, GameObject afterObj)
     {
