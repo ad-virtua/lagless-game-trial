@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 39c5140d637874fe4a1b811d7a49aa15
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 14308da2070ab49b3816a6883479e448, type: 3}
+  pixelsPerUnit: 100
+  createAnimationClip: 1
+  loopAnimation: 1
+  filterMode: 0
+  useBackgroundColor: 0
+  flipVertical: 1
+  hideTextureAssets: 1
