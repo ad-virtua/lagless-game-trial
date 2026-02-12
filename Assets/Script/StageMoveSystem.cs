@@ -57,22 +57,11 @@ public class StageMoveSystem : MonoBehaviour
 
                 if (sceneType == SceneType.Stage1)
                 {
-                    if (StageManager.instance.stageAreaCount == 4 && !tutorialLatter.activeSelf)
-                    {
-                        StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
-                        StartCoroutine(StageChangeBigupBlackout(mouth, inMouth));
-                    }
-                    else if (StageManager.instance.stageAreaCount < 4)
-                    {
-                        StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
-                        StartCoroutine(Generic.BigupObj(mouth, 0.2f, 1.5f));
-                    }
-
-                    if (StageManager.instance.stageAreaCount == 8)
+                    if (StageManager.instance.stageAreaCount == 5)
                     {
                         specialPosCount.y += 3f;
                     }
-                    else if (StageManager.instance.stageAreaCount == 9)
+                    else if (StageManager.instance.stageAreaCount == 6)
                     {
                         specialPosCount.x += 7f;
                         specialPosCount.y += 9f;
@@ -88,12 +77,7 @@ public class StageMoveSystem : MonoBehaviour
 
                 if (sceneType == SceneType.Stage1)
                 {
-                    if (StageManager.instance.stageAreaCount < 4)
-                    {
-                        StartCoroutine(Generic.Shake(2.5f, 0.1f, Camera.main.gameObject, false));
-                        StartCoroutine(Generic.SmallupObj(mouth, 0.2f, 1.5f));
-                    }
-                    if (StageManager.instance.stageAreaCount == 7)
+                    if (StageManager.instance.stageAreaCount == 5)
                     {
                         specialPosCount.y -= 3f;
                     }
@@ -123,7 +107,7 @@ public class StageMoveSystem : MonoBehaviour
 
                 if (sceneType == SceneType.Stage1)
                 {
-                    if (StageManager.instance.stageAreaCount == 8)
+                    if (StageManager.instance.stageAreaCount == 6)
                     {
                         stagePosCount.x += 18f;
                         specialPosCount.x -= 7f;
