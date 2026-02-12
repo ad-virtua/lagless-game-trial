@@ -112,4 +112,10 @@ public class ScenesManagers : MonoBehaviour
     {
         isPause = isEnable;
     }
+
+    public IEnumerator BackTitle(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene("Title");
+    }
 }

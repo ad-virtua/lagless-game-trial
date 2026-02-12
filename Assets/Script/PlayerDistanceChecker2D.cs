@@ -6,6 +6,11 @@ using UnityEngine;
 /// </summary>
 public class PlayerDistanceChecker2D : MonoBehaviour
 {
+    private const float GroundedSnapOffset = 0.05f;
+
+    private Player player;
+    private Rigidbody2D rb;
+    private Collider2D playerCollider;
     [Header("Rayの設定")]
     [Tooltip("Rayの最大距離")]
     public float maxDistance = 100f;
@@ -32,11 +37,18 @@ public class PlayerDistanceChecker2D : MonoBehaviour
 
     [HideInInspector] public bool isDownClose;
 
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+        rb = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<Collider2D>();
+    }
+
     void Update()
     {
         if (ScenesManagers.instance.isPause) return;
 
-        if (GetComponent<Player>().isPortal) return;
+        if (player.isPortal) return;
 
         // 1. 上下の距離をそれぞれ計測
         distanceUp = MeasureDistance(Vector2.up);
@@ -73,9 +85,13 @@ public class PlayerDistanceChecker2D : MonoBehaviour
             actionTriggered = false;
         }
 
-        if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) < 0.1f && isDownClose)
+        if (Mathf.Abs(rb.velocity.y) < 0.1f && isDownClose && distanceDown > 0f)
         {
-            GetComponent<Player>().isGrounded = true;
+            float groundSnapDistance = (transform.position.y - playerCollider.bounds.min.y) + GroundedSnapOffset;
+            if (distanceDown <= groundSnapDistance)
+            {
+                player.isGrounded = true;
+            }
         }
     }
 

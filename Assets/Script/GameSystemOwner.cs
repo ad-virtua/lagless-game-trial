@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameSystemOwner : MonoBehaviour
@@ -37,7 +38,7 @@ public class GameSystemOwner : MonoBehaviour
         if (isGameOver && !gameOverUI.activeSelf)
         {
             gameOverUI.SetActive(true);
-
+            StartCoroutine(ScenesManagers.instance.BackTitle(2f));
         }
     }
 
