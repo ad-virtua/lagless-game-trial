@@ -235,6 +235,12 @@ public class Player : MonoBehaviour
     {
         if (GameSystemOwner.isGameOver) return;
 
+        if (collision.tag == "Item")
+        {
+            HealHP(1);
+            Destroy(collision.gameObject);
+        }
+
         if (collision.tag == "Portal" && !isPortal)
         {
             isPortal = true;
@@ -396,6 +402,23 @@ public class Player : MonoBehaviour
             GameSystemOwner.isGameOver = true;
             GetComponent<SpriteRenderer>().enabled = false;
         }
+    }
+
+    public void HealHP(int heal)
+    {
+        if (heal <= 0) return;
+
+        int maxHp = hpUI.transform.childCount;
+        if (hp >= maxHp) return;
+        if (hp + heal > maxHp) heal = maxHp - hp;
+
+        int hpCount = hp;
+        for (int i = 0; i < heal; i++)
+        {
+            hpUI.transform.GetChild(hpCount).gameObject.SetActive(true);
+            hpCount++;
+        }
+        hp += heal;
     }
 
     public void ResetPosition()

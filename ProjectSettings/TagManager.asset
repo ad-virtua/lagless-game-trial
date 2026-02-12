@@ -16,6 +16,7 @@ TagManager:
   - Shield
   - Gear
   - Movie
+  - Item
   layers:
   - Default
   - TransparentFX
