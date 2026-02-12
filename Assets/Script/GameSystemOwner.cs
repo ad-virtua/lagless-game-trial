@@ -46,7 +46,6 @@ public class GameSystemOwner : MonoBehaviour
         if (isClear)
         {
             StageProgressSave.SaveClearedStage(ScenesManagers.sceneType);
-            Debug.Log(ScenesManagers.sceneType);
 
             if (!movieScenes[(int)ScenesManagers.SceneType.Stage1 - 1].activeSelf &&
                 ScenesManagers.sceneType != ScenesManagers.SceneType.Stage2)
