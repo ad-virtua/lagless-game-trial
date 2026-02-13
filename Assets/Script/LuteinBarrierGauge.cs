@@ -29,6 +29,7 @@ public class LuteinBarrierGauge : MonoBehaviour
     public void Skill()
     {
         if (!isMax || StageMoveSystem.instance.isScreenMove) return;
+        isPlayBarrier = true;
         StartCoroutine(LuteinBarrier());
         ResetParameter();
     }
@@ -54,7 +55,7 @@ public class LuteinBarrierGauge : MonoBehaviour
         while (elapsed < duration)
         {
             // ■ 画面移動中は待機する（スライダー更新しない）
-            while (StageMoveSystem.instance.isScreenMove || ScenesManagers.instance.isPause)
+            while (StageMoveSystem.instance.isScreenMove || ScenesManagers.instance.isPause || isPlayBarrier)
             {
                 yield return null;
             }

@@ -13,6 +13,7 @@ public class SpecialGauge : MonoBehaviour
 
     Slider slider;
     private bool isMax;
+    private bool isPlaySkill;
 
     private void Awake()
     {
@@ -34,7 +35,7 @@ public class SpecialGauge : MonoBehaviour
         while (elapsed < duration)
         {
             // ■ 画面移動中は待機する（スライダー更新しない）
-            while (StageMoveSystem.instance.isScreenMove || ScenesManagers.instance.isPause)
+            while (StageMoveSystem.instance.isScreenMove || ScenesManagers.instance.isPause || isPlaySkill)
             {
                 yield return null;
             }
@@ -55,6 +56,7 @@ public class SpecialGauge : MonoBehaviour
     {
         if (!isMax || StageMoveSystem.instance.isScreenMove) return;
 
+        isPlaySkill = true;
         StartCoroutine(Flash());
         ResetParameter();
     }
@@ -75,6 +77,8 @@ public class SpecialGauge : MonoBehaviour
                 StartCoroutine(EnemyManager.instance.Damage(enemy, flashDamage));
             }
         }
+
+        isPlaySkill = false;
     }
 
     void ResetParameter()

@@ -7,7 +7,8 @@ public class Portal : MonoBehaviour
     private Transform target;
     public float speed = 3f;
     public Transform goalPortal;
-    public bool isShortCut;
+    public bool isSpecialScreenMove;
+    public float specialMove;
 
     private void Start()
     {

@@ -33,7 +33,8 @@ public class Player : MonoBehaviour
     private Vector3 startPosition;
     private Quaternion startRot;
     private bool isDamage;
-    public bool isPortal, isShortCut;
+    public bool isPortal, isSpecialScreenMove;
+    [HideInInspector] public float specialMove;
 
     enum AnimType
     {
@@ -254,7 +255,11 @@ public class Player : MonoBehaviour
             isPortal = true;
             GetComponent<SpriteRenderer>().enabled = false;
             GetComponent<BoxCollider2D>().isTrigger = true;
-            if (collision.GetComponent<Portal>().isShortCut) isShortCut = true;
+            if (collision.GetComponent<Portal>().isSpecialScreenMove)
+            {
+                isSpecialScreenMove = true;
+                specialMove = collision.GetComponent<Portal>().specialMove;
+            }
             if (sceneType == SceneType.Stage3) LuteinBarrierGauge.instance.AllResetParameter();
 
             // 最終位置を正確に

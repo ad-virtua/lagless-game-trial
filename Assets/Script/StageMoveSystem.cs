@@ -91,9 +91,9 @@ public class StageMoveSystem : MonoBehaviour
 
                 if (sceneType == SceneType.Stage2 || sceneType == SceneType.Stage3)
                 {
-                    if (player.GetComponent<Player>().isShortCut)
+                    if (player.GetComponent<Player>().isSpecialScreenMove)
                     {
-                        stagePosCount.y += 20.95f;
+                        stagePosCount.y += player.GetComponent<Player>().specialMove;
                         StageManager.instance.stageAreaCount++;
                     }
                     else stagePosCount.y += 9.75f;
@@ -116,9 +116,9 @@ public class StageMoveSystem : MonoBehaviour
                 }
                 if (sceneType == SceneType.Stage2 || sceneType == SceneType.Stage3)
                 {
-                    if (player.GetComponent<Player>().isShortCut)
+                    if (player.GetComponent<Player>().isSpecialScreenMove)
                     {
-                        stagePosCount.y -= 20.95f;
+                        stagePosCount.y -= player.GetComponent<Player>().specialMove;
                         StageManager.instance.stageAreaCount--;
                     }
                     else stagePosCount.y -= 9.75f;
@@ -191,7 +191,7 @@ public class StageMoveSystem : MonoBehaviour
         marginDistanceX = new Vector2(player.transform.position.x, player.transform.position.z);
         marginDistanceY = new Vector2(player.transform.position.y, player.transform.position.z);
         Player.instance.SavePos();
-        player.GetComponent<Player>().isShortCut = false;
+        player.GetComponent<Player>().isSpecialScreenMove = false;
         MoveEnd();
     }
 
