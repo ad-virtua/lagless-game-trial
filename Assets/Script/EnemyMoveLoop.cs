@@ -29,6 +29,19 @@ public class EnemyMoveLoop : MonoBehaviour
     [HideInInspector]
     public AnimType animType;
 
+    // ── Boss トゲ回転攻撃用 ──
+    [Header("Boss Spike Rotation")]
+    [SerializeField] private float spikeRotSpeed = 90f;        // 通常時の回転速度 (度/秒)
+    [SerializeField] private float spikeRotSpeedFast = 180f;   // HP半分以下の回転速度 (度/秒)
+
+    // Boss > Rot > ATKPoints 構造用
+    private bool isBoss;
+    private bool isSpikeRotating;
+    private bool bossDeathTriggered; // BossClear の多重呼び出しを防ぐ
+    private Transform rotGroup;      // Boss の子 "Rot" オブジェクト
+    private readonly List<Vector3> spikeStartPos = new List<Vector3>();
+    private readonly List<Quaternion> spikeStartRot = new List<Quaternion>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +54,23 @@ public class EnemyMoveLoop : MonoBehaviour
         screenRangeChecker = GetComponent<ScreenRangeChecker>();
         animType = AnimType.Run;
 
-        CacheAtkChildren();
+        isBoss = transform.CompareTag("Boss");
+
+        if (isBoss)
+        {
+            CacheRotGroup();
+
+            // キャッシュ完了後、参照用に配置した ATKPoint を削除
+            if (rotGroup != null)
+                foreach (Transform child in rotGroup)
+                    Destroy(child.gameObject);
+
+            isSpikeRotating = true; // ゲーム開始直後から回転
+        }
+        else
+        {
+            CacheAtkChildren();
+        }
 
         startX = transform.localPosition.x;
         startY = transform.localPosition.y;
@@ -71,7 +100,13 @@ public class EnemyMoveLoop : MonoBehaviour
             {
                 if (transform.tag == "Boss") EnemyManager.instance.InScreen?.Invoke();
                 isPlayerDistanceRange = true;
-                if (enemyParameters.atk != null && enemyParameters.atk.Length != 0) StartCoroutine(ATK(3f, 5f));
+                if (enemyParameters.atk != null && enemyParameters.atk.Length != 0)
+                {
+                    if (isBoss)
+                        StartCoroutine(BossATK(3f, 5f));
+                    else
+                        StartCoroutine(ATK(3f, 5f));
+                }
             }
         }
 
@@ -132,8 +167,116 @@ public class EnemyMoveLoop : MonoBehaviour
         {
             transform.Rotate(0, 0, enemyParameters.rotSpeed);
         }
+
+        // ── Boss: Rot グループの回転処理 ──
+        if (isBoss && isSpikeRotating && rotGroup != null)
+        {
+            float speed = (hp > startHP / 2) ? spikeRotSpeed : spikeRotSpeedFast;
+            rotGroup.Rotate(0, 0, speed * Time.deltaTime);
+        }
     }
 
+    // ── Boss 用: Rot グループと ATKPoint のキャッシュ ──
+    private void CacheRotGroup()
+    {
+        if (transform.childCount == 0) return;
+
+        rotGroup = transform.GetChild(0); // "Rot" オブジェクト
+
+        spikeStartPos.Clear();
+        spikeStartRot.Clear();
+
+        for (int i = 0; i < rotGroup.childCount; i++)
+        {
+            spikeStartPos.Add(rotGroup.GetChild(i).localPosition);
+            spikeStartRot.Add(rotGroup.GetChild(i).localRotation);
+        }
+    }
+
+    // ── Boss 用 ATK コルーチン ──
+    IEnumerator BossATK(float atkIntervalTime, float createIntervalTime)
+    {
+        // 初回: ATKPoint を生え変わりアニメから開始
+        isSpikeRotating = false;
+        if (rotGroup != null) rotGroup.localRotation = Quaternion.identity;
+        yield return StartCoroutine(RespawnSpikes(createIntervalTime));
+
+        while (true)
+        {
+            // ムービー中は待機
+            yield return StartCoroutine(WaitWhileMovie());
+
+            animType = AnimType.ATK;
+            yield return new WaitForSeconds(atkIntervalTime / 4f);
+            if (GameSystemOwner.isClear) yield break;
+
+            yield return StartCoroutine(WaitWhileMovie());
+            spriteRenderer.sprite = enemyParameters.atk[0];
+
+            yield return new WaitForSeconds(atkIntervalTime / 4f);
+            if (GameSystemOwner.isClear) yield break;
+
+            yield return StartCoroutine(WaitWhileMovie());
+            spriteRenderer.sprite = enemyParameters.atk[1];
+
+            // ── 回転停止 → 全 ATKPoint 発射 ──
+            yield return StartCoroutine(WaitWhileMovie());
+            float rand = Random.Range(0.0f, 1.0f);
+            yield return new WaitForSeconds(rand);
+            isSpikeRotating = false;
+
+            if (rotGroup != null)
+            {
+                for (int i = 0; i < rotGroup.childCount; i++)
+                {
+                    Atk atk = rotGroup.GetChild(i).GetComponent<Atk>();
+                    if (atk) atk.StartAtk();
+                }
+            }
+
+            yield return new WaitForSeconds(createIntervalTime / 4f);
+            if (GameSystemOwner.isClear) yield break;
+
+            yield return StartCoroutine(WaitWhileMovie());
+            animType = AnimType.Run;
+            StartCoroutine(AnimSpeed(enemyParameters.run, enemyParameters.runAnimSpeed, AnimType.Run));
+
+            // ── 古い ATKPoint を破棄 ──
+            if (rotGroup != null)
+            {
+                foreach (Transform child in rotGroup) Destroy(child.gameObject);
+                rotGroup.localRotation = Quaternion.identity;
+            }
+
+            // ── ATKPoint 再生成 ──
+            yield return StartCoroutine(RespawnSpikes(createIntervalTime));
+        }
+    }
+
+    // ── ATKPoint 再生成ヘルパー ──
+    IEnumerator RespawnSpikes(float createIntervalTime)
+    {
+        for (int i = 0; i < spikeStartPos.Count; i++)
+        {
+            yield return StartCoroutine(WaitWhileMovie());
+            while (StageMoveSystem.instance.isScreenMove || ScenesManagers.instance.isPause)
+                yield return null;
+
+            GameObject child = Instantiate(enemyParameters.atkPrefab, rotGroup);
+            child.transform.localPosition = Vector3.zero;
+            child.transform.localRotation = spikeStartRot[i];
+            StartCoroutine(child.GetComponent<Atk>().StandbyLerp(spikeStartPos[i], 1f));
+
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        // 再生成完了 → 回転再開
+        isSpikeRotating = true;
+
+        yield return new WaitForSeconds(createIntervalTime / 4f);
+    }
+
+    // ── 通常敵用 ATK コルーチン (従来のロジック) ──
     IEnumerator ATK(float atkIntervalTime, float createIntervalTime)
     {
         List<Vector3> pos = new List<Vector3>();
@@ -238,18 +381,36 @@ public class EnemyMoveLoop : MonoBehaviour
         {
             Destroy(collision.gameObject);
             if (hp == 9999) return;
+            if (isBoss && bossDeathTriggered) return; // 死亡演出中は点滅・HP減算をしない
             StartCoroutine(Generic.DamageFlash(spriteRenderer, 0.05f, 4));
-            for (int i = 0; i < transform.childCount; i++)
+
+            // Boss: Rot 以下の全 SpriteRenderer をダメージフラッシュ
+            if (isBoss)
             {
-                StartCoroutine(Generic.DamageFlash(transform.GetChild(i).GetComponent<SpriteRenderer>(), 0.05f, 4));
+                foreach (var sr in GetComponentsInChildren<SpriteRenderer>())
+                {
+                    if (sr != spriteRenderer)
+                        StartCoroutine(Generic.DamageFlash(sr, 0.05f, 4));
+                }
+            }
+            else
+            {
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    StartCoroutine(Generic.DamageFlash(transform.GetChild(i).GetComponent<SpriteRenderer>(), 0.05f, 4));
+                }
             }
 
             hp--;
             if (hp < 0)
             {
-                if (gameObject.tag == "Boss")
+                if (isBoss)
                 {
-                    StartCoroutine(StageMoveSystem.instance.BossClear(gameObject));
+                    if (!bossDeathTriggered)
+                    {
+                        bossDeathTriggered = true;
+                        StartCoroutine(StageMoveSystem.instance.BossClear(gameObject));
+                    }
                 }
                 else Destroy(gameObject);
             }

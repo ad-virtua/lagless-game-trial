@@ -32,11 +32,16 @@ MonoBehaviour:
   followStartRange: 8
   followStopRange: 12
   turnOffset: 0.8
+  followAtkInterval: 3
+  followOnlyX: 0
+  followBlockMask:
+    serializedVersion: 2
+    m_Bits: 0
   moveToLeftFirst: 0
   idelMotion: 1
   isSpriteLeft: 1
   isDirectionLock: 1
   isMoveHigh: 0
   isCustomAnim: 1
-  hp: 50
+  hp: 200
   atkPrefab: {fileID: 3467629045386610358, guid: 20db8d27bb7694a15bd3bae2080a811f, type: 3}
